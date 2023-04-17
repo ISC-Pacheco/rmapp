@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/pages/home_pages.dart';
+import 'DataTableBienes.dart';
 
 void main() => runApp(RmApp());
 
@@ -15,7 +15,7 @@ class RmApp extends StatelessWidget {
         title: 'RmApp',
         home: LoginPage(),
         routes: <String, WidgetBuilder>{
-          '/home_pages': (BuildContext context) => const HomePage(),
+          '/DataTableBienes': (BuildContext context) => DataTableBienes(),
           '/login_page': (BuildContext context) => LoginPage(),
         });
   }
@@ -31,11 +31,10 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   String mensaje = '';
-  var httpsuri =
-      Uri(scheme: "https", host: "10.0.0.2", path: "/tesvb/login.php");
+  var url = Uri.https('localhost', '/tesvb/bienes.php');
 
   Future<List> login() async {
-    final response = await http.post(httpsuri, body: {
+    final response = await http.post(url, body: {
       "rm_username": usernameController.text,
       "rm_password": passwordController.text,
     });
@@ -197,8 +196,11 @@ class _LoginPageState extends State<LoginPage> {
                         child: InkWell(
                           onTap: () {
                             //login(); //llamamos a la funcion login
-                            Navigator.of(context)
-                                .pushReplacementNamed('/home_pages');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DataTableBienes()),
+                            );
                           },
                           child: const Center(
                             child: Text(
