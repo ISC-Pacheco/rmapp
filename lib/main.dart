@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:mysql1/mysql1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'DataTableBienes.dart';
@@ -31,10 +33,11 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   String mensaje = '';
-  var url = Uri.https('localhost', '/tesvb/bienes.php');
 
   Future<List> login() async {
-    final response = await http.post(url, body: {
+    final conn = await MySqlConnection.connect(ConnectionSettings(
+        host: 'localhost', port: 3306, user: 'root', db: "prueba_tec"));
+    final response = await http.post(conn as Uri, body: {
       "rm_username": usernameController.text,
       "rm_password": passwordController.text,
     });
@@ -55,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
     }
     return datauser;
   }
+
+  //Desarrollo de la interfaz de la pagina de login
 
   @override
   Widget build(BuildContext) {
@@ -195,12 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            //login(); //llamamos a la funcion login
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DataTableBienes()),
-                            );
+                            login(); //llamamos a la funcion login
                           },
                           child: const Center(
                             child: Text(

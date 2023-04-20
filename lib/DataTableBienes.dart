@@ -4,7 +4,8 @@ import 'Servicios.dart';
 
 class DataTableBienes extends StatefulWidget {
   DataTableBienes() : super();
-  final String title = 'Bieness Data Table';
+  final String title = 'Bieness Materiales';
+
   @override
   DataTableBienesState createState() => DataTableBienesState();
 }
@@ -63,7 +64,7 @@ class DataTableBienesState extends State<DataTableBienes> {
     _created_atController = TextEditingController();
     _updated_atController = TextEditingController();
     _facturaController = TextEditingController();
-    _getBienes();
+    //_getBienes();
   }
 
   _showProgress(String message) {
@@ -123,16 +124,225 @@ class DataTableBienesState extends State<DataTableBienes> {
     _facturaController!.text = '';
   }
 
+  //se crea la tabla de bienes y se integra el scrollview para que se pueda desplazar horizontalmente y verticalmente
+  SingleChildScrollView _dataBody() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          columns: [
+            DataColumn(
+              label: Text('NOMBRE'),
+            ),
+            DataColumn(
+              label: Text('CARACTERISTICAS'),
+            ),
+            DataColumn(
+              label: Text('NUM_INVENTARIO'),
+            ),
+            DataColumn(
+              label: Text('NICK'),
+            ),
+            DataColumn(
+              label: Text('SERIE'),
+            ),
+            DataColumn(
+              label: Text('COSTO'),
+            ),
+            DataColumn(
+              label: Text('STOCK'),
+            ),
+            DataColumn(
+              label: Text('ID_COLOR'),
+            ),
+            DataColumn(
+              label: Text('ID_TIPOB'),
+            ),
+            DataColumn(
+              label: Text('ID_TIPOADQUI'),
+            ),
+            DataColumn(
+              label: Text('FECHAADQUI'),
+            ),
+            DataColumn(
+              label: Text('CONDICION'),
+            ),
+            DataColumn(
+              label: Text('ID_CATEGORIA'),
+            ),
+            DataColumn(
+              label: Text('ID_PROVEEDOR'),
+            ),
+            DataColumn(
+              label: Text('ID_MODELO'),
+            ),
+            DataColumn(
+              label: Text('ID_ESTADO'),
+            ),
+            DataColumn(
+              label: Text('ID_MARCA'),
+            ),
+            DataColumn(
+              label: Text('CREATED_AT'),
+            ),
+            DataColumn(
+              label: Text('UPDATED_AT'),
+            ),
+            DataColumn(
+              label: Text('FACTURA'),
+            ),
+            // Editar
+            DataColumn(
+              label: Text('EDITAR'),
+            ),
+            // Eliminar
+            DataColumn(
+              label: Text('ELIMINAR'),
+            ),
+          ],
+          rows: _bienes!
+              .map(
+                (bien) => DataRow(cells: [
+                  DataCell(
+                    Text(bien.nombre.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.caracteristicas.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.num_inventario.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.nick.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.serie.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.costo.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.stock.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_color.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_tipob.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_tipoadqui.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.fechaadqui.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.condicion.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_categoria.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_proveedor.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_modelo.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_estado.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.id_marca.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.created_at.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.updated_at.toString()),
+                  ),
+                  DataCell(
+                    Text(bien.factura.toString()),
+                  ),
+                ]),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
+
   //IU
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
+      drawer: Drawer(
+        child: Container(
+          color: Colors.blue[100],
+          child: Column(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                margin: const EdgeInsets.only(top: 50, bottom: 20),
+                child: Image.asset('assets/images/splashs.png'),
+              ),
+              const Text(
+                'TESVB',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                color: Colors.grey[100],
+                child: const Text("Inicio"),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                color: Colors.grey[100],
+                child: const Text("Gestionar bien material"),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                color: Colors.grey[100],
+                child: const Text("Consultar bien material"),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                padding: const EdgeInsets.all(20),
+                width: double.infinity,
+                color: Colors.black87,
+                alignment: Alignment.center,
+                child: const Text(
+                  "Cerrar sesión",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: Text(_titleProgress!),
         backgroundColor: Colors.blue,
       ),
       body: Container(
+        //error renderflex overflowed by 421 pixels on the bottom
+        height: 1200,
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(3.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -216,7 +426,7 @@ class DataTableBienesState extends State<DataTableBienes> {
               controller: _facturaController,
               decoration: InputDecoration(hintText: 'Factura'),
             ),
-            //Botones
+            /*//Botones Agregar, Actualizar y Eliminar
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -251,7 +461,7 @@ class DataTableBienesState extends State<DataTableBienes> {
                   ),
                 ),
               ],
-            ),
+            ),*/
             //Lista
             Expanded(
               child: ListView.builder(
