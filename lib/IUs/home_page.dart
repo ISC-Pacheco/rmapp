@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePages> {
             IconButton(
               icon: const Icon(Icons.qr_code_scanner),
               onPressed: () {
-                Navigator.pushNamed(context, 'Escaner');
+                Navigator.pushNamed(context, '/qrscan_page');
               },
             ),
           ],
