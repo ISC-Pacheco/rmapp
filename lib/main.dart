@@ -3,9 +3,14 @@ import 'dart:convert';
 import 'package:mysql1/mysql1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'DataTableBienes.dart';
+import 'IUs/bienes_page.dart';
+import 'IUs/gestion_page.dart';
+import 'IUs/home_page.dart';
+import 'IUs/qrscan_page.dart';
+import 'IUs/report_page.dart';
+import 'IUs/search_page.dart';
 
-void main() => runApp(RmApp());
+void main() async => runApp(RmApp());
 
 String? rm_username;
 
@@ -17,8 +22,13 @@ class RmApp extends StatelessWidget {
         title: 'RmApp',
         home: LoginPage(),
         routes: <String, WidgetBuilder>{
-          '/DataTableBienes': (BuildContext context) => DataTableBienes(),
+          '/home_page': (BuildContext context) => HomePages(),
           '/login_page': (BuildContext context) => LoginPage(),
+          '/bienes_page': (BuildContext context) => BienesPage(),
+          '/gestion_page': (BuildContext context) => GestionPage(),
+          '/report_page': (BuildContext context) => ReportPage(),
+          '/search_page': (BuildContext context) => SearchPage(),
+          '/qrscan_page': (BuildContext context) => Qrscan(),
         });
   }
 }
@@ -34,30 +44,50 @@ class _LoginPageState extends State<LoginPage> {
 
   String mensaje = '';
 
-  Future<List> login() async {
-    final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'localhost', port: 3306, user: 'root', db: "prueba_tec"));
-    final response = await http.post(conn as Uri, body: {
-      "rm_username": usernameController.text,
-      "rm_password": passwordController.text,
-    });
-
-    var datauser = json.decode(response.body);
-
-    if (datauser.length == 0) {
-      setState(() {
-        mensaje = "Usuario o contraseña incorrectos";
+  Future<List> login() async => MySqlConnection.connect(ConnectionSettings(
+              host: '192.168.1.103',
+              port: 3306,
+              password: "",
+              user: 'root',
+              db: "prueba_tec"))
+          .then((conn) async {
+        if (conn != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Conectado'),
+            ),
+          );
+        }
+        var response = await http.post(conn as Uri, body: {
+          "rm_username": usernameController.text,
+          "rm_password": passwordController.text,
+        });
+        var datauser = json.decode(response.body);
+        if (datauser.length == 0) {
+          setState(() {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Usuario o contraseña incorrectos'),
+              ),
+            );
+          });
+        } else {
+          if (datauser[1]['rm_username'] == usernameController.text &&
+              datauser[2]['rm_password'] == passwordController.text) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Bienvenido'),
+              ),
+            );
+            Navigator.of(context).pushReplacementNamed('/home_page');
+          }
+          setState(() {
+            usernameController = datauser[1]['rm_username'];
+            passwordController = datauser[2]['rm_password'];
+          });
+        }
+        return datauser;
       });
-    } else {
-      if (datauser[0]['rm_username'] == usernameController.text) {
-        Navigator.of(context).pushReplacementNamed('/home_pages');
-      }
-      setState(() {
-        usernameController = datauser[0]['rm_username'];
-      });
-    }
-    return datauser;
-  }
 
   //Desarrollo de la interfaz de la pagina de login
 
@@ -200,7 +230,9 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            login(); //llamamos a la funcion login
+                            //login(); //llamamos a la home page
+                            Navigator.of(context)
+                                .pushReplacementNamed('/home_page');
                           },
                           child: const Center(
                             child: Text(

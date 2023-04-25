@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   mysql1: ^0.20.0
   http: ^0.13.5
+  requests: ^4.7.0
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:

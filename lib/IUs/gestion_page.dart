@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'Bieness.dart';
-import 'Servicios.dart';
 
-class DataTableBienes extends StatefulWidget {
-  DataTableBienes() : super();
+import '../Bieness.dart';
+import '../Servicios.dart';
+
+class GestionPage extends StatefulWidget {
+  GestionPage() : super();
   final String title = 'Bieness Materiales';
 
   @override
   DataTableBienesState createState() => DataTableBienesState();
 }
 
-class DataTableBienesState extends State<DataTableBienes> {
+class DataTableBienesState extends State<GestionPage> {
   List<Bieness>? _bienes;
   GlobalKey<ScaffoldState>? _scaffoldKey;
   TextEditingController? _nombreController;
@@ -125,6 +126,7 @@ class DataTableBienesState extends State<DataTableBienes> {
   }
 
   //se crea la tabla de bienes y se integra el scrollview para que se pueda desplazar horizontalmente y verticalmente
+
   SingleChildScrollView _dataBody() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -272,77 +274,19 @@ class DataTableBienesState extends State<DataTableBienes> {
     );
   }
 
-  //IU
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: Container(
-          color: Colors.blue[100],
-          child: Column(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                margin: const EdgeInsets.only(top: 50, bottom: 20),
-                child: Image.asset('assets/images/splashs.png'),
-              ),
-              const Text(
-                'TESVB',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                padding: const EdgeInsets.all(20),
-                width: double.infinity,
-                color: Colors.grey[100],
-                child: const Text("Inicio"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 2),
-                padding: const EdgeInsets.all(20),
-                width: double.infinity,
-                color: Colors.grey[100],
-                child: const Text("Gestionar bien material"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 2),
-                padding: const EdgeInsets.all(20),
-                width: double.infinity,
-                color: Colors.grey[100],
-                child: const Text("Consultar bien material"),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 2),
-                padding: const EdgeInsets.all(20),
-                width: double.infinity,
-                color: Colors.black87,
-                alignment: Alignment.center,
-                child: const Text(
-                  "Cerrar sesión",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text(_titleProgress!),
         backgroundColor: Colors.blue,
-      ),
+      ),*/
       body: Container(
-        //error renderflex overflowed by 421 pixels on the bottom
-        height: 1200,
-        width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(3.0),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width / .5,
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -351,82 +295,101 @@ class DataTableBienesState extends State<DataTableBienes> {
               decoration: InputDecoration(hintText: 'Nombre'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _caracteristicasController,
               decoration: InputDecoration(hintText: 'Caracteristicas'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _num_inventarioController,
               decoration: InputDecoration(hintText: 'Num_inventario'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _nickController,
               decoration: InputDecoration(hintText: 'Nick'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _serieController,
               decoration: InputDecoration(hintText: 'Serie'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _costoController,
               decoration: InputDecoration(hintText: 'Costo'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _stockController,
               decoration: InputDecoration(hintText: 'Stock'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_colorController,
               decoration: InputDecoration(hintText: 'Id_color'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_tipobController,
               decoration: InputDecoration(hintText: 'Id_tipob'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_tipoadquiController,
               decoration: InputDecoration(hintText: 'Id_tipoadqui'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _fechaadquiController,
               decoration: InputDecoration(hintText: 'Fechaadqui'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _condicionController,
               decoration: InputDecoration(hintText: 'Condicion'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_categoriaController,
               decoration: InputDecoration(hintText: 'Id_categoria'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_proveedorController,
               decoration: InputDecoration(hintText: 'Id_proveedor'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_modeloController,
               decoration: InputDecoration(hintText: 'Id_modelo'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_estadoController,
               decoration: InputDecoration(hintText: 'Id_estado'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _id_marcaController,
               decoration: InputDecoration(hintText: 'Id_marca'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _created_atController,
               decoration: InputDecoration(hintText: 'Created_at'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _updated_atController,
               decoration: InputDecoration(hintText: 'Updated_at'),
             ),
             TextField(
+              scrollPadding: const EdgeInsets.all(20.0),
               controller: _facturaController,
               decoration: InputDecoration(hintText: 'Factura'),
             ),
-            /*//Botones Agregar, Actualizar y Eliminar
+            //Botones Agregar, Actualizar y Eliminar
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -461,7 +424,7 @@ class DataTableBienesState extends State<DataTableBienes> {
                   ),
                 ),
               ],
-            ),*/
+            ),
             //Lista
             Expanded(
               child: ListView.builder(
