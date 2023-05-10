@@ -65,9 +65,6 @@ class _QrscanPage extends State<Qrscan> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                    onPressed: () => scanBarcodeNormal(),
-                    child: Text('Iniciar escaneo de código de barras')),
-                ElevatedButton(
                     onPressed: () => scanQR(),
                     child: Text('Inicio de escaneo de código QR')),
                 ElevatedButton(
