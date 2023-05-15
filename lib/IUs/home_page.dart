@@ -15,8 +15,8 @@ class _HomePageState extends State<HomePages> {
   int _paginaActual = 0;
   late final Color? shadowColor;
   List<Widget> _paginas = [
-    BienesPage(),
     GestionPage(),
+    BienesPage(),
     SearchPage(),
     ReportPage(),
   ];
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePages> {
             Navigator.pushNamed(context, '/gestion_page');
           },
           child: const Icon(Icons.add),
-          backgroundColor: Colors.blue,
+          backgroundColor: const Color.fromARGB(255, 27, 57, 106),
         ),
         drawer: Drawer(
           child: Container(
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePages> {
                       onTap: () {
                         //llamamos a page_inicio
                         Navigator.of(context)
-                            .pushReplacementNamed('/gestion_page');
+                            .pushReplacementNamed('/bienes_page');
                       },
                       child: const Center(
                         child: Text(
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePages> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
-              label: 'Gestiona',
+              label: 'Gestion',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),

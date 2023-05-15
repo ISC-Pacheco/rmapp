@@ -8,8 +8,9 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('Reportes'),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Reportes')),
+      body: const Text('Reportes'),
     );
   }
 }

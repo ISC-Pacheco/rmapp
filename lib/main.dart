@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:mysql1/mysql1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rmapp/servicios/constant.dart';
 import 'IUs/bienes_page.dart';
 import 'IUs/gestion_page.dart';
 import 'IUs/home_page.dart';
@@ -47,50 +47,41 @@ class _LoginPageState extends State<LoginPage> {
 
   String mensaje = '';
 
-  Future<List> login() async => MySqlConnection.connect(ConnectionSettings(
-              host: '192.168.1.103',
-              port: 3306,
-              password: "",
-              user: 'root',
-              db: "prueba_tec"))
-          .then((conn) async {
-        if (conn != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Conectado'),
-            ),
-          );
-        }
-        var response = await http.post(conn as Uri, body: {
-          "rm_username": usernameController.text,
-          "rm_password": passwordController.text,
-        });
-        var datauser = json.decode(response.body);
-        if (datauser.length == 0) {
-          setState(() {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Usuario o contraseña incorrectos'),
-              ),
-            );
-          });
-        } else {
-          if (datauser[1]['rm_username'] == usernameController.text &&
-              datauser[2]['rm_password'] == passwordController.text) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Bienvenido'),
-              ),
-            );
-            Navigator.of(context).pushReplacementNamed('/home_page');
-          }
-          setState(() {
-            usernameController = datauser[1]['rm_username'];
-            passwordController = datauser[2]['rm_password'];
-          });
-        }
-        return datauser;
+  Future login(BuildContext cont) async {
+    if (usernameController.text == "" || passwordController.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ingrese usuario y contraseña'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    } else {
+      var url = Uri.parse('http://192.168.1.103/tesvb/login.php');
+      var response = await http.post(url, body: {
+        "rm_username": usernameController.text,
+        "rm_password": passwordController.text,
       });
+
+      var data = json.decode(response.body);
+      if (data == "Completado") {
+        Navigator.of(cont).pushReplacementNamed('/home_page');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Bienvenido'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Usuario o contraseña incorrectos'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+  }
 
   //Desarrollo de la interfaz de la pagina de login
 
@@ -233,9 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            //login(); //llamamos a la home page
-                            Navigator.of(context)
-                                .pushReplacementNamed('/home_page');
+                            login(context); /*llamamos a la home page*/
                           },
                           child: const Center(
                             child: Text(

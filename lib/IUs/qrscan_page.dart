@@ -29,7 +29,7 @@ class _QrscanPage extends State<Qrscan> {
           '#ff6666', 'Cancel', true, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+      barcodeScanRes = 'Falla al obtener la version de la plataforma.';
     }
     if (!mounted) return;
 
@@ -57,23 +57,24 @@ class _QrscanPage extends State<Qrscan> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(body: Builder(builder: (BuildContext context) {
-      return Container(
-          alignment: Alignment.center,
-          child: Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                    onPressed: () => scanQR(),
-                    child: Text('Inicio de escaneo de código QR')),
-                ElevatedButton(
-                    onPressed: () => startBarcodeScanStream(),
-                    child: Text(
-                        'Inicio de escaneo de código de barras en secuencia')),
-                Text('Resultado del escaner : $_scanBarcode\n',
-                    style: TextStyle(fontSize: 20))
-              ]));
-    })));
+          return Container(
+              alignment: Alignment.center,
+              child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                        onPressed: () => scanQR(),
+                        child: Text('Inicio de escaneo de código QR')),
+                    ElevatedButton(
+                        onPressed: () => startBarcodeScanStream(),
+                        child: Text(
+                            'Inicio de escaneo de código de barras en secuencia')),
+                    Text('Resultado del escaner : $_scanBarcode\n',
+                        style: TextStyle(fontSize: 20))
+                  ]));
+        })));
   }
 }
