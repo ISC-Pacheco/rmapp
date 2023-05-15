@@ -28,7 +28,7 @@ class _NickState extends State<ByNick> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buscada por numero de inventario'),
+        title: const Text('Resultados de la búsqueda'),
       ),
       body: BienesModelo == null || BienesModelo != null
           ? const Center(

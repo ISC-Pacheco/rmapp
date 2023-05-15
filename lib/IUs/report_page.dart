@@ -9,7 +9,10 @@ class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Reportes')),
+      appBar: AppBar(
+        title: const Text('Reportes'),
+        toolbarHeight: 0,
+      ),
       body: const Text('Reportes'),
     );
   }

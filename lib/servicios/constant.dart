@@ -10,4 +10,6 @@ class APIconstant {
   static String rutagetbienes = "/tesvb/GET_ALL.php";
   //peticion reporte de bienes
   static String rutareportebienes = "/tesvb/GET_ALL.php";
+  //peticion busqueda de bienes
+  static String rutaSearch = "/tesvb/GET_NICK.php";
 }

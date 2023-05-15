@@ -181,22 +181,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          top: 8.0,
-                          right: 32.0,
-                        ),
-                        child: const Text(
-                          'Olvidaste tu contraseña?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.0,
-                          ),
-                        ),
-                      ),
-                    ),
                     Container(
                       height: 40,
                       width: MediaQuery.of(context).size.width / 3,

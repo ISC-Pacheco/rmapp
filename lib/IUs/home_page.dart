@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePages> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/gestion_page');
+            Navigator.pushNamed(context, '/bienes_page');
           },
           child: const Icon(Icons.add),
           backgroundColor: const Color.fromARGB(255, 27, 57, 106),
