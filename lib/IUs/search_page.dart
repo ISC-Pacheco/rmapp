@@ -23,10 +23,16 @@ class _SearchPageState extends State<SearchPage> {
       );
       return;
     } else {
-      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaSearch);
-      var response = await http.get(url);
+      var url = Uri.parse("http://localhost/tesvb/GET_NICK.php?nick=");
+      var response = await http.post(url, body: {
+        'nick': searchController.text,
+      });
       var data = json.decode(response.body);
-      if (data == "completado") {
+      print(response.body);
+      print(data);
+      Future.delayed(const Duration(seconds: 3))
+          .then((value) => setState(() {}));
+      if (response == 200) {
         Navigator.of(cont).pushReplacementNamed('/searchByNick');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

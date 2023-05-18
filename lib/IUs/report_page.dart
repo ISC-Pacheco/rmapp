@@ -17,22 +17,3 @@ class ReportPage extends StatelessWidget {
     );
   }
 }
-
-class plantillaPDF {
-  final pdf = pw.Document();
-
-  Future<void> main() async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) => pw.Center(
-          child: pw.Text('Hello World!'),
-        ),
-      ),
-    );
-
-    final file = File('example.pdf');
-    await file.writeAsBytes(await pdf.save());
-  }
-}

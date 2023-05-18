@@ -17,9 +17,23 @@ class DataTableBienesState extends State<GestionPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              //reporteMensual(context); /*llamamos a reporte mensual*/
+            },
+            child: const Center(
+              child: Text(
+                'Reporte mensual',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

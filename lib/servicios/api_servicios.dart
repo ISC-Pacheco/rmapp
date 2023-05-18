@@ -11,12 +11,7 @@ class ApiServiciosBienes {
     try {
       var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
       var response = await http.get(url);
-      if (response.statusCode == "success") {
-        List<BienesModelo>? _bienes = bienesModeloFromJson(response.body);
-        return _bienes;
-      } else {
-        return null;
-      }
+      return json.decode(response.body);
     } catch (e) {
       log(e.toString());
     }

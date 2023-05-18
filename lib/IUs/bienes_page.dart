@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:requests/requests.dart';
+import 'package:http/http.dart' as http;
 import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:rmapp/rm_models/show_bienes_model.dart';
+
+import '../servicios/constant.dart';
 
 class BienesPage extends StatefulWidget {
   const BienesPage({Key? key}) : super(key: key);
@@ -19,8 +24,11 @@ class _BienesPageState extends State<BienesPage> {
   }
 
   void _getData() async {
-    _bienesModelo = (await ApiServiciosBienes().getBienes())!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    Future<List<BienesModelo>?> getBienes() async {
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
+      var response = await http.get(url);
+      return json.decode(response.body);
+    }
   }
 
   @override

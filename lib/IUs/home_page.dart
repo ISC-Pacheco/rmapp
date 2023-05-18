@@ -15,8 +15,8 @@ class _HomePageState extends State<HomePages> {
   int _paginaActual = 0;
   late final Color? shadowColor;
   List<Widget> _paginas = [
-    GestionPage(),
     BienesPage(),
+    GestionPage(),
     SearchPage(),
     ReportPage(),
   ];
