@@ -37,26 +37,20 @@ class _NickState extends State<ByNick> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<BienesModelo>>(
-          future: _resultadoBienes,
-          builder: (context, snap) {
-            if (snap.hasData) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Se estan cargando los datos'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-              return ListView.builder(
-                  itemCount: snap.data!.length,
-                  itemBuilder: (context, i) {
-                    return Text(snap.data![i].nombre);
-                  });
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
+      appBar: AppBar(
+        title: const Text('Resultados de la búsqueda'),
+      ),
+      body: ListView.builder(
+        itemCount: _bienesModelo!.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(_bienesModelo![index].nick),
+              subtitle: Text(_bienesModelo![index].nombre),
+            ),
+          );
+        },
+      ),
     );
   }
 }

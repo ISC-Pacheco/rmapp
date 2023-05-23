@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'IUs/bienes_page.dart';
-import 'IUs/gestion_page.dart';
 import 'IUs/home_page.dart';
 import 'IUs/qrscan_page.dart';
 import 'IUs/report_page.dart';
 import 'IUs/searchByNick.dart';
 import 'IUs/search_page.dart';
+import 'IUs/facturas_page.dart';
 
 void main() async => runApp(RmApp());
 
@@ -26,7 +26,7 @@ class RmApp extends StatelessWidget {
           '/home_page': (BuildContext context) => HomePages(),
           '/login_page': (BuildContext context) => LoginPage(),
           '/bienes_page': (BuildContext context) => BienesPage(),
-          '/gestion_page': (BuildContext context) => GestionPage(),
+          '/facturas_page': (BuildContext context) => facturas_page(),
           '/report_page': (BuildContext context) => ReportPage(),
           '/search_page': (BuildContext context) => SearchPage(),
           '/qrscan_page': (BuildContext context) => Qrscan(),

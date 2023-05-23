@@ -13,7 +13,9 @@ class ReportPage extends StatelessWidget {
         title: const Text('Reportes'),
         toolbarHeight: 0,
       ),
-      body: const Text('Reportes'),
+      body: const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
