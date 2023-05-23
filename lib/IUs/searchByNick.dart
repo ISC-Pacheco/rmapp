@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../servicios/api_servicios.dart';
 import '../rm_models/show_bienes_model.dart';
+import '../servicios/constant.dart';
+import 'package:http/http.dart' as http;
 
 class ByNick extends StatefulWidget {
   const ByNick({Key? key}) : super(key: key);
@@ -15,60 +18,45 @@ class _NickState extends State<ByNick> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    getBien();
   }
 
-  void _getData() async {
-    _bienesModelo = await ApiServiciosBienes().getBienes()!;
-    Future.delayed(const Duration(seconds: 1))
-        .then(((value) => setState(() {})));
+  Future<List<BienesModelo>>? _resultadoBienes;
+  Future<List<BienesModelo>?> getBien() async {
+    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaSearch);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+      final jsonData = jsonDecode(body);
+      print(jsonData);
+    } else {
+      throw Exception('Falla al obtener los datos');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resultados de la búsqueda'),
-      ),
-      body: BienesModelo == null || BienesModelo != null
-          ? const Center(
+      body: FutureBuilder<List<BienesModelo>>(
+          future: _resultadoBienes,
+          builder: (context, snap) {
+            if (snap.hasData) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Se estan cargando los datos'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+              return ListView.builder(
+                  itemCount: snap.data!.length,
+                  itemBuilder: (context, i) {
+                    return Text(snap.data![i].nombre);
+                  });
+            }
+            return const Center(
               child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: _bienesModelo!.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_bienesModelo![index].nombre),
-                          Text(_bienesModelo![index].caracteristicas),
-                          Text(_bienesModelo![index].numInventario),
-                          Text(_bienesModelo![index].nick),
-                          Text(_bienesModelo![index].serie),
-                          Text(_bienesModelo![index].costo),
-                          Text(_bienesModelo![index].stock),
-                          Text(_bienesModelo![index].idColor),
-                          Text(_bienesModelo![index].idTipob),
-                          Text(_bienesModelo![index].idTipoadqui),
-                          Text(_bienesModelo![index].fechadqui.toString()),
-                          Text(_bienesModelo![index].condicion),
-                          Text(_bienesModelo![index].idCategoria),
-                          Text(_bienesModelo![index].idProvedor),
-                          Text(_bienesModelo![index].idModelo),
-                          Text(_bienesModelo![index].idEstado),
-                          Text(_bienesModelo![index].idMarca),
-                          Text(_bienesModelo![index].createdAt.toString()),
-                          Text(_bienesModelo![index].updatedAt.toString()),
-                          Text(_bienesModelo![index].factura),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              }),
+            );
+          }),
     );
   }
 }

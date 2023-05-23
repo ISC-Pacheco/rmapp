@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rmapp/rm_models/show_bienes_model.dart';
 import 'package:rmapp/servicios/constant.dart';
 
 class SearchPage extends StatefulWidget {
@@ -23,16 +24,15 @@ class _SearchPageState extends State<SearchPage> {
       );
       return;
     } else {
-      var url = Uri.parse("http://localhost/tesvb/GET_NICK.php?nick=");
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaSearch);
       var response = await http.post(url, body: {
         'nick': searchController.text,
       });
-      var data = json.decode(response.body);
-      print(response.body);
-      print(data);
-      Future.delayed(const Duration(seconds: 3))
-          .then((value) => setState(() {}));
+      List<BienesModelo> bien = [];
       if (response == 200) {
+        String body = utf8.decode(response.bodyBytes);
+        final jsonData = jsonDecode(body);
+        print(jsonData);
         Navigator.of(cont).pushReplacementNamed('/searchByNick');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

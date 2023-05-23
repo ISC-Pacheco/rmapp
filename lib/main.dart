@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/servicios/constant.dart';
 import 'IUs/bienes_page.dart';
 import 'IUs/gestion_page.dart';
 import 'IUs/home_page.dart';

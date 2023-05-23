@@ -3,17 +3,23 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../rm_models/Bien.dart';
+import '../rm_models/Bienes.dart';
 import '../rm_models/show_bienes_model.dart';
 import 'constant.dart';
 
 class ApiServiciosBienes {
+  Future<List<BienesModelo>>? _listadoBienes;
   Future<List<BienesModelo>?> getBienes() async {
-    try {
-      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
-      var response = await http.get(url);
-      return json.decode(response.body);
-    } catch (e) {
-      log(e.toString());
+    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
+    final response = await http.get(url);
+    List<BienesModelo> bienes = [];
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+      final jsonData = jsonDecode(body);
+      print(jsonData);
+    } else {
+      throw Exception('Falla al cargar los datos');
     }
   }
 }
