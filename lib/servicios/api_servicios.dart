@@ -3,21 +3,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../rm_models/Bien.dart';
-import '../rm_models/Bienes.dart';
+import 'package:rmapp/rm_models/Bien.dart';
+import 'package:rmapp/rm_models/modelo_factura.dart';
 import '../rm_models/show_bienes_model.dart';
 import 'constant.dart';
 
 class ApiServiciosBienes {
-  Future<List<BienesModelo>>? _listadoBienes;
-  Future<List<BienesModelo>?> getBienes() async {
+  Future<List<BienMaterial>>? _listadoBienes;
+  Future<List<BienMaterial>?> getBienes() async {
     var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
     final response = await http.get(url);
-    List<BienesModelo> bienes = [];
     if (response.statusCode == 200) {
-      String body = utf8.decode(response.bodyBytes);
-      final jsonData = jsonDecode(body);
-      print(jsonData);
     } else {
       throw Exception('Falla al cargar los datos');
     }
@@ -52,6 +48,19 @@ class ApiServiciosBusqueda {
       var data = jsonDecode(response.body);
     } catch (e) {
       log(e.toString());
+    }
+  }
+}
+
+class ApiServiciosFacturas {
+  Future<List<Datum>?> getFacturas() async {
+    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaFacturas);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      List<Datum> _modeloF = facturaGeneralFromJson(response.body);
+      return _modeloF;
+    } else {
+      throw Exception('Falla al cargar los datos');
     }
   }
 }

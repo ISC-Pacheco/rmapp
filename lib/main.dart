@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rmapp/servicios/constant.dart';
 import 'IUs/bienes_page.dart';
 import 'IUs/home_page.dart';
 import 'IUs/qrscan_page.dart';
@@ -56,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     } else {
-      var url = Uri.parse('http://192.168.1.103/tesvb/login.php');
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaLogin);
       var response = await http.post(url, body: {
         "rm_username": usernameController.text,
         "rm_password": passwordController.text,

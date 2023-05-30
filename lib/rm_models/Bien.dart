@@ -1,45 +1,8 @@
-import 'dart:convert';
-
-/*
-Para convertir este código JSON usamos:
-final Bien = bienesModeloFromJson(jsonString);
-*/
-
-List<Bien> bienesModeloFromJson(String str) =>
-    List<Bien>.from(json.decode(str).map((x) => Bien.fromJson(x)));
-
-String bienesModeloToJson(List<Bien> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class Bien {
-  Bien({
-    required this.id,
-    required this.nombre,
-    required this.caracteristicas,
-    required this.numInventario,
-    required this.nick,
-    required this.serie,
-    required this.costo,
-    required this.stock,
-    required this.idColor,
-    required this.idTipob,
-    required this.idTipoadqui,
-    required this.fechadqui,
-    required this.condicion,
-    required this.idCategoria,
-    required this.idProvedor,
-    required this.idModelo,
-    required this.idEstado,
-    required this.idMarca,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.factura,
-  });
-
+class BienMaterial {
   String id;
   String nombre;
   String caracteristicas;
-  String numInventario;
+  String numInventario = "Sin registro";
   String nick;
   String serie;
   String costo;
@@ -47,63 +10,59 @@ class Bien {
   String idColor;
   String idTipob;
   String idTipoadqui;
-  DateTime fechadqui;
+  String fechadqui;
   String condicion;
   String idCategoria;
   String idProvedor;
   String idModelo;
   String idEstado;
   String idMarca;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
   String factura;
 
-  factory Bien.fromJson(Map<String, dynamic> json) => Bien(
-        id: json["id"],
-        nombre: json["nombre"],
-        caracteristicas: json["caracteristicas"],
-        numInventario: json["num_inventario"],
-        nick: json["nick"],
-        serie: json["serie"],
-        costo: json["costo"],
-        stock: json["stock"],
-        idColor: json["id_color"],
-        idTipob: json["id_tipob"],
-        idTipoadqui: json["id_tipoadqui"],
-        fechadqui: DateTime.parse(json["fechadqui"]),
-        condicion: json["condicion"],
-        idCategoria: json["id_categoria"],
-        idProvedor: json["id_provedor"],
-        idModelo: json["id_modelo"],
-        idEstado: json["id_estado"],
-        idMarca: json["id_marca"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        factura: json["factura"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "nombre": nombre,
-        "caracteristicas": caracteristicas,
-        "num_inventario": numInventario,
-        "nick": nick,
-        "serie": serie,
-        "costo": costo,
-        "stock": stock,
-        "id_color": idColor,
-        "id_tipob": idTipob,
-        "id_tipoadqui": idTipoadqui,
-        "fechadqui":
-            "${fechadqui.year.toString().padLeft(4, '0')}-${fechadqui.month.toString().padLeft(2, '0')}-${fechadqui.day.toString().padLeft(2, '0')}",
-        "condicion": condicion,
-        "id_categoria": idCategoria,
-        "id_provedor": idProvedor,
-        "id_modelo": idModelo,
-        "id_estado": idEstado,
-        "id_marca": idMarca,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "factura": factura,
-      };
+  BienMaterial(
+      this.id,
+      this.nombre,
+      this.caracteristicas,
+      this.numInventario,
+      this.nick,
+      this.serie,
+      this.costo,
+      this.stock,
+      this.idColor,
+      this.idTipob,
+      this.idTipoadqui,
+      this.fechadqui,
+      this.condicion,
+      this.idCategoria,
+      this.idProvedor,
+      this.idModelo,
+      this.idEstado,
+      this.idMarca,
+      this.createdAt,
+      this.updatedAt,
+      this.factura) {
+    String? id = this.id;
+    String? nombre = this.nombre;
+    String? caracteristicas = this.caracteristicas;
+    String? numInventario = this.numInventario;
+    String? nick = this.nick;
+    String? serie = this.serie;
+    String? costo = this.costo;
+    String? stock = this.stock;
+    String? idColor = this.idColor;
+    String? idTipob = this.idTipob;
+    String? idTipoadqui = this.idTipoadqui;
+    String? fechadqui = this.fechadqui;
+    String? condicion = this.condicion;
+    String? idCategoria = this.idCategoria;
+    String? idProvedor = this.idProvedor;
+    String? idModelo = this.idModelo;
+    String? idEstado = this.idEstado;
+    String? idMarca = this.idMarca;
+    String? createdAt = this.createdAt;
+    String? updatedAt = this.updatedAt;
+    String? factura = this.factura;
+  }
 }
