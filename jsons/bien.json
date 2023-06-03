@@ -1,0 +1,23 @@
+{
+    "id": "1",
+    "nombre": "TELEVISOR",
+    "caracteristicas": "SER.4008536, MAT. PLASTICO",
+    "num_inventario": "TESVB00161",
+    "nick": "256385",
+    "serie": "CV B564",
+    "costo": "5998.99",
+    "stock": "1",
+    "id_color": "3",
+    "id_tipob": "1",
+    "id_tipoadqui": "1",
+    "fechadqui": "2023-01-05",
+    "condicion": "1",
+    "id_categoria": "3",
+    "id_provedor": "3",
+    "id_modelo": "4",
+    "id_estado": "1",
+    "id_marca": "1",
+    "created_at": "2023-01-11 14:20:48",
+    "updated_at": "2023-01-18 12:47:11",
+    "factura": "EJ-2017-FEB-12-1054"
+}

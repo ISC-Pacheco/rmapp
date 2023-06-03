@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/rm_models/show_bienes_model.dart';
 import 'package:rmapp/servicios/constant.dart';
+
+import '../models/bien.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
       var response = await http.post(url, body: {
         'nick': searchController.text,
       });
-      List<BienesModelo> bien = [];
+      List<Bien> bien = [];
       if (response == 200) {
         String body = utf8.decode(response.bodyBytes);
         final jsonData = jsonDecode(body);

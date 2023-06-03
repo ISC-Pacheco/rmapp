@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmapp/servicios/api_servicios.dart';
 
-import '../rm_models/modelo_factura.dart';
-
 class facturas_page extends StatefulWidget {
   const facturas_page({super.key});
 
@@ -11,7 +9,7 @@ class facturas_page extends StatefulWidget {
 }
 
 class _facturas_pageState extends State<facturas_page> {
-  late List<Datum>? _listFacturas = [];
+  //late List<Datum>? _listFacturas = [];
   @override
   void initState() {
     super.initState();

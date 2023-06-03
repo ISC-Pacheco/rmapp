@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import '../models/bien.dart';
 import '../servicios/api_servicios.dart';
-import '../rm_models/show_bienes_model.dart';
 import '../servicios/constant.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,15 +14,15 @@ class ByNick extends StatefulWidget {
 }
 
 class _NickState extends State<ByNick> {
-  late List<BienesModelo>? _bienesModelo = [];
+  late List<Bien>? _bienesModelo = [];
   @override
   void initState() {
     super.initState();
     getBien();
   }
 
-  Future<List<BienesModelo>>? _resultadoBienes;
-  Future<List<BienesModelo>?> getBien() async {
+  //Future<List<Bien>> _resultadoBienes;
+  Future<List<Bien>?> getBien() async {
     var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaSearch);
     final response = await http.get(url);
     if (response.statusCode == 200) {

@@ -1,12 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:rmapp/Servicios.dart';
+import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:flutter/material.dart';
-import 'package:rmapp/rm_models/Bien.dart';
+import 'package:rmapp/models/bienes.dart';
+import 'package:rmapp/models/bien.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/rm_models/Bienes.dart';
 import '../servicios/constant.dart';
 
 class BienesPage extends StatefulWidget {
-  const BienesPage({Key? key}) : super(key: key);
+  BienesPage({Key? key}) : super(key: key);
+
+  final String title = "Lista de bienes";
 
   @override
   _BienesPageState createState() => _BienesPageState();
@@ -14,170 +19,83 @@ class BienesPage extends StatefulWidget {
 
 //BienesModleo hace referencia al modelo de datos usado para un bien material
 class _BienesPageState extends State<BienesPage> {
-  late Future<List<BienMaterial>> _listadoBienes;
-
-  Future<List<BienMaterial>> _getBienes() async {
-    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
-    final response = await http.get(url);
-    List<BienMaterial> bienes = [];
-    if (response.statusCode == 200) {
-      String body = utf8.decode(response
-          .bodyBytes); //se decodifica el json con utf8 por algun caracter especial
-      final jsonData = jsonDecode(body);
-      for (var item in jsonData["data"]) {
-        print(jsonData);
-        bienes.add(BienMaterial(
-          item["id"],
-          item["nombre"],
-          item["caracteristicas"],
-          item["numInventario"],
-          item["nick"],
-          item["serie"],
-          item["costo"],
-          item["stock"],
-          item["idColor"],
-          item["idTipob"],
-          item["idTipoadqui"],
-          item["fechadqui"],
-          item["condicion"],
-          item["idCategoria"],
-          item["idProvedor"],
-          item["idModelo"],
-          item["idEstado"],
-          item["idMarca"],
-          item["createdAt"],
-          item["updatedAt"],
-          item["factura"],
-        ));
-      }
-      return bienes;
-      //print(jsonData["data"][0]); //imprime el primer elemento del json por lo que se puede ver la estructura json
-    } else {
-      throw Exception('Falla al cargar los datos');
-    }
-  }
-
+  // Lista de bienes
+  late Bienes bienes;
+  late String title;
+  // Variable para controlar el estado de la lista de bienes
   @override
   void initState() {
     super.initState();
-    _listadoBienes = _getBienes();
+    title = 'Cargando bienes...';
+    // Obtenemos la lista de bienes
+    bienes = Bienes();
+    ApiServiciosBienes.getBienes().then((bienesFromServer) {
+      // Actualizamos la lista de bienes
+      setState(() {
+        bienes = bienesFromServer;
+        title = widget.title;
+      });
+    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text('Bienes registrados')),
-          backgroundColor: Colors.blueGrey,
-          toolbarHeight: 0,
-        ),
-        body: FutureBuilder(
-          future: _listadoBienes,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              //print(snapshot.data); // imprime informacion que viene en el snapshot
-              return ListView(
-                children: _listBienes(snapshot.data as List<BienMaterial>),
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-            return const CircularProgressIndicator();
-          },
+  Widget list() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: bienes.bienes == null ? 0 : bienes.bienes?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return row(index);
+        },
+      ),
+    );
+  }
+
+  Widget row(int index) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              bienes.bienes![index].nombre,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].costo,
+              style: TextStyle(
+                fontSize: 10.0,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  List<Widget> _listBienes(List<BienMaterial> data) {
-    List<Widget> bienes = [];
-    for (var item in data) {
-      bienes.add(
-        Card(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.nombre),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.numInventario),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.nick),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.serie),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.costo),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.stock),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idColor),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idTipob),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idTipoadqui),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.fechadqui),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.condicion),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idCategoria),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idProvedor),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idModelo),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idEstado),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.idMarca),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.createdAt),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.updatedAt),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(item.factura),
-              ),
-            ],
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        backgroundColor: Colors.blueGrey,
+        //toolbarHeight: 0,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            list(),
+          ],
         ),
-      );
-    }
-    return bienes;
+      ),
+    );
   }
 }

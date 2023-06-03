@@ -3,27 +3,40 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/rm_models/Bien.dart';
-import 'package:rmapp/rm_models/modelo_factura.dart';
-import '../rm_models/show_bienes_model.dart';
+import 'package:rmapp/models/bien.dart';
+import 'package:rmapp/models/bienes.dart';
 import 'constant.dart';
 
 class ApiServiciosBienes {
-  Future<List<BienMaterial>>? _listadoBienes;
-  Future<List<BienMaterial>?> getBienes() async {
-    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-    } else {
-      throw Exception('Falla al cargar los datos');
+  static var url = Uri.parse(APIconstant.base_URL + APIconstant.rutagetbienes);
+  static Future<Bienes> getBienes() async {
+    try {
+      final response = await http.get(url);
+      if (200 == response.statusCode) {
+        return parseBienes(response.body);
+      } else {
+        return Bienes();
+      }
+    } catch (e) {
+      print("Error ${e.toString()}");
+      return Bienes();
     }
+  }
+
+  static Bienes parseBienes(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    List<Bien> bienes =
+        parsed.map<Bien>((json) => Bien.fromJson(json)).toList();
+    Bienes b = Bienes();
+    b.bienes = bienes;
+    return b;
   }
 }
 
 class ApiServiciosLogin {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Future<List<BienesModelo>?> login() async {
+  Future<List<Bien>?> login() async {
     try {
       var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaLogin);
       var response = await http.post(url, body: {
@@ -39,7 +52,7 @@ class ApiServiciosLogin {
 
 class ApiServiciosBusqueda {
   TextEditingController searchController = TextEditingController();
-  Future<List<BienesModelo>?> search() async {
+  Future<List<Bien>?> search() async {
     try {
       var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaSearch);
       var response = await http.post(url, body: {
@@ -48,19 +61,6 @@ class ApiServiciosBusqueda {
       var data = jsonDecode(response.body);
     } catch (e) {
       log(e.toString());
-    }
-  }
-}
-
-class ApiServiciosFacturas {
-  Future<List<Datum>?> getFacturas() async {
-    var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaFacturas);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      List<Datum> _modeloF = facturaGeneralFromJson(response.body);
-      return _modeloF;
-    } else {
-      throw Exception('Falla al cargar los datos');
     }
   }
 }
