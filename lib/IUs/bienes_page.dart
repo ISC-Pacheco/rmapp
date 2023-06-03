@@ -1,12 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:rmapp/Servicios.dart';
 import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:flutter/material.dart';
 import 'package:rmapp/models/bienes.dart';
-import 'package:rmapp/models/bien.dart';
-import 'package:http/http.dart' as http;
-import '../servicios/constant.dart';
 
 class BienesPage extends StatefulWidget {
   BienesPage({Key? key}) : super(key: key);
@@ -17,8 +12,24 @@ class BienesPage extends StatefulWidget {
   _BienesPageState createState() => _BienesPageState();
 }
 
+class TiempoDeEspera {
+  late final int milliseconds;
+  late VoidCallback action;
+  Timer? _timer;
+
+  TiempoDeEspera({required this.milliseconds});
+  run(VoidCallback action) {
+    if (null != _timer) {
+      _timer?.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
+}
+
 //BienesModleo hace referencia al modelo de datos usado para un bien material
 class _BienesPageState extends State<BienesPage> {
+  final tiempodeespera = TiempoDeEspera(milliseconds: 1000);
+
   // Lista de bienes
   late Bienes bienes;
   late String title;
@@ -68,7 +79,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              bienes.bienes![index].costo,
+              bienes.bienes![index].nick,
               style: TextStyle(
                 fontSize: 10.0,
                 color: Colors.grey,
@@ -80,11 +91,42 @@ class _BienesPageState extends State<BienesPage> {
     );
   }
 
+  Widget searchTF() {
+    return TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(
+              5.0,
+            ),
+          ),
+        ),
+        filled: true,
+        fillColor: Colors.white54,
+        contentPadding: EdgeInsets.all(15.0),
+        hintText: 'Filtrar por nombre o nick',
+      ),
+      onChanged: (string) {
+        tiempodeespera.run(() {
+          setState(() {
+            title = 'Buscando...';
+          });
+          ApiServiciosBienes.getBienes().then((bienesFromServer) {
+            setState(() {
+              bienes = Bienes.filterList(bienesFromServer, string);
+              title = widget.title;
+            });
+          });
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
         backgroundColor: Colors.blueGrey,
         //toolbarHeight: 0,
       ),
@@ -92,6 +134,10 @@ class _BienesPageState extends State<BienesPage> {
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
+            searchTF(),
+            SizedBox(
+              height: 10.0,
+            ),
             list(),
           ],
         ),
