@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:rmapp/IUs/bienes_page.dart';
 import 'package:rmapp/IUs/facturas_page.dart';
+import 'package:rmapp/IUs/gestion_page.dart';
 import 'package:rmapp/IUs/report_page.dart';
 import 'package:rmapp/IUs/search_page.dart';
 
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePages> {
   late final Color? shadowColor;
   List<Widget> _paginas = [
     BienesPage(),
-    facturas_page(),
+    GestionPage(),
     SearchPage(),
     ReportPage(),
   ];
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePages> {
                       onTap: () {
                         //llamamos a page_gestion
                         Navigator.of(context)
-                            .pushReplacementNamed('/facturas_page');
+                            .pushReplacementNamed('/gestion_page');
                       },
                       child: const Center(
                         child: Text(

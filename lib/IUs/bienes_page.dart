@@ -26,7 +26,7 @@ class TiempoDeEspera {
   }
 }
 
-//BienesModleo hace referencia al modelo de datos usado para un bien material
+//referencia al modelo de datos usado para un bien material
 class _BienesPageState extends State<BienesPage> {
   final tiempodeespera = TiempoDeEspera(milliseconds: 1000);
 
@@ -79,11 +79,64 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              bienes.bienes![index].nick,
+              bienes.bienes![index].caracteristicas,
               style: TextStyle(
-                fontSize: 10.0,
+                fontSize: 14.0,
                 color: Colors.grey,
               ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].num_inventario,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].nick,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].serie,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].costo,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].stock,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
             ),
           ],
         ),

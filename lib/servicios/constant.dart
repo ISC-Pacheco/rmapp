@@ -14,4 +14,8 @@ class APIconstant {
   static String rutaSearch = "/tesvb/GET_NICK.php?nick=";
   //peticion para facturas
   static String rutaFacturas = "/tesvb/factura_bienes.php";
+  //peticion para asociados
+  static String rutaAsociados = "/tesvb/asociados.php";
+  //peticion para resguardos
+  static String rutaResguardos = "/tesvb/GET_RESGUARDOS.php";
 }

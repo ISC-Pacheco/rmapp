@@ -11,7 +11,6 @@ class ReportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reportes'),
-        toolbarHeight: 0,
       ),
       body: const Center(
         child: CircularProgressIndicator(),
