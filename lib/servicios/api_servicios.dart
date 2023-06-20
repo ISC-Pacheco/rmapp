@@ -3,8 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/models/bien.dart';
-import 'package:rmapp/models/bienes.dart';
 import 'package:rmapp/models/index.dart';
 import 'constant.dart';
 

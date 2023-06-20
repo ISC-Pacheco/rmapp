@@ -22,13 +22,6 @@ class _HomePageState extends State<HomePages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/bienes_page');
-          },
-          child: const Icon(Icons.add),
-          backgroundColor: const Color.fromARGB(255, 27, 57, 106),
-        ),
         drawer: Drawer(
           child: Container(
             color: Color.fromARGB(255, 56, 128, 246),

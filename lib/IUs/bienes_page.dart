@@ -82,7 +82,7 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].caracteristicas,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
             SizedBox(
@@ -92,7 +92,7 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].num_inventario,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
             SizedBox(
@@ -102,7 +102,7 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].nick,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
             SizedBox(
@@ -112,7 +112,7 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].serie,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
             SizedBox(
@@ -122,7 +122,7 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].costo,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
             SizedBox(
@@ -132,7 +132,137 @@ class _BienesPageState extends State<BienesPage> {
               bienes.bienes![index].stock,
               style: TextStyle(
                 fontSize: 14.0,
-                color: Colors.grey,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_color,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_tipob,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_tipoadqui,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].fechadqui,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].condicion,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_categoria,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_provedor,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_modelo,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_estado,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].id_marca,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].created_at,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].updated_at,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              bienes.bienes![index].factura,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
               ),
             ),
             SizedBox(
