@@ -154,6 +154,10 @@ class _BienesPageState extends State<BienesPage> {
             ),
           ),
         ),
+        icon: Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
         filled: true,
         fillColor: Colors.white54,
         contentPadding: EdgeInsets.all(15.0),
@@ -180,7 +184,7 @@ class _BienesPageState extends State<BienesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Color.fromARGB(255, 43, 140, 237),
         //toolbarHeight: 0,
       ),
       body: Container(

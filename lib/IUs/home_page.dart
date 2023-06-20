@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rmapp/IUs/bienes_page.dart';
-import 'package:rmapp/IUs/facturas_page.dart';
 import 'package:rmapp/IUs/gestion_page.dart';
 import 'package:rmapp/IUs/report_page.dart';
-import 'package:rmapp/IUs/search_page.dart';
 
 class HomePages extends StatefulWidget {
   @override
@@ -18,7 +16,6 @@ class _HomePageState extends State<HomePages> {
   List<Widget> _paginas = [
     BienesPage(),
     GestionPage(),
-    SearchPage(),
     ReportPage(),
   ];
 
@@ -74,8 +71,7 @@ class _HomePageState extends State<HomePages> {
                     child: InkWell(
                       onTap: () {
                         //llamamos a page_inicio
-                        Navigator.of(context)
-                            .pushReplacementNamed('/bienes_page');
+                        Navigator.of(context).pushNamed('/bienes_page');
                       },
                       child: const Center(
                         child: Text(
@@ -117,8 +113,7 @@ class _HomePageState extends State<HomePages> {
                     child: InkWell(
                       onTap: () {
                         //llamamos a page_gestion
-                        Navigator.of(context)
-                            .pushReplacementNamed('/gestion_page');
+                        Navigator.of(context).pushNamed('/gestion_page');
                       },
                       child: const Center(
                         child: Text(
@@ -159,52 +154,8 @@ class _HomePageState extends State<HomePages> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        //llamamos a page_search
-                        Navigator.of(context)
-                            .pushReplacementNamed('/search_page');
-                      },
-                      child: const Center(
-                        child: Text(
-                          'Buscar',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1,
-                  margin: const EdgeInsets.only(
-                    top: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 55, 23, 234),
-                        Color.fromARGB(255, 107, 96, 234),
-                      ],
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF6078ea).withOpacity(.3),
-                        offset: const Offset(0.0, 8.0),
-                        blurRadius: 8.0,
-                      ),
-                    ],
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
                         //llamamos a page_report
-                        Navigator.of(context)
-                            .pushReplacementNamed('/report_page');
+                        Navigator.of(context).pushNamed('/report_page');
                       },
                       child: const Center(
                         child: Text(
@@ -273,10 +224,6 @@ class _HomePageState extends State<HomePages> {
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: 'Gestion',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Buscar',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.task),

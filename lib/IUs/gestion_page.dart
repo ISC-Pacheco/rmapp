@@ -181,7 +181,7 @@ class DataTableBienesState extends State<GestionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Color.fromARGB(255, 56, 128, 246),
         //toolbarHeight: 0,
       ),
       body: Container(

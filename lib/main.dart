@@ -8,9 +8,7 @@ import 'IUs/bienes_page.dart';
 import 'IUs/home_page.dart';
 import 'IUs/qrscan_page.dart';
 import 'IUs/report_page.dart';
-import 'IUs/searchByNick.dart';
 import 'IUs/search_page.dart';
-import 'IUs/facturas_page.dart';
 
 void main() async => runApp(RmApp());
 
@@ -32,7 +30,6 @@ class RmApp extends StatelessWidget {
           '/report_page': (BuildContext context) => ReportPage(),
           '/search_page': (BuildContext context) => SearchPage(),
           '/qrscan_page': (BuildContext context) => Qrscan(),
-          '/searchByNick': (BuildContext context) => ByNick(),
         });
   }
 }

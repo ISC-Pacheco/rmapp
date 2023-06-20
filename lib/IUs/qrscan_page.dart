@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:rmapp/IUs/searchByNick.dart';
 import 'package:rmapp/servicios/constant.dart';
 import 'package:http/http.dart' as http;
 
