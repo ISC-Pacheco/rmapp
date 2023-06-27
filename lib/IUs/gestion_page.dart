@@ -36,6 +36,12 @@ class DataTableBienesState extends State<GestionPage> {
   // Lista de resguardos
   late Resguardos resguardos;
   late String title;
+  //flags
+  var nobreBien = "Material: ";
+  var resguardador = "Responsable: ";
+  var cantidad = "Cantidad: ";
+  var fecha = "Fecha: ";
+
   // Variable para controlar el estado de la lista de resguardos
   @override
   void initState() {
@@ -73,7 +79,7 @@ class DataTableBienesState extends State<GestionPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              resguardos.resguardos![index].nombre,
+              nobreBien + resguardos.resguardos![index].nombre,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -83,7 +89,7 @@ class DataTableBienesState extends State<GestionPage> {
               height: 5.0,
             ),
             Text(
-              resguardos.resguardos![index].Fecha,
+              cantidad + resguardos.resguardos![index].Cantidad,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -93,7 +99,7 @@ class DataTableBienesState extends State<GestionPage> {
               height: 5.0,
             ),
             Text(
-              resguardos.resguardos![index].Cantidad,
+              resguardador + resguardos.resguardos![index].resguardo,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -101,43 +107,6 @@ class DataTableBienesState extends State<GestionPage> {
             ),
             SizedBox(
               height: 5.0,
-            ),
-            Text(
-              resguardos.resguardos![index].resguardo,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              resguardos.resguardos![index].registro,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              resguardos.resguardos![index].registro,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              resguardos.resguardos![index].actualizacion,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
             ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rmapp/IUs/all_bienes_page.dart';
 import 'package:rmapp/IUs/gestion_page.dart';
 import 'package:rmapp/servicios/constant.dart';
 import 'IUs/bienes_page.dart';
@@ -30,6 +31,7 @@ class RmApp extends StatelessWidget {
           '/report_page': (BuildContext context) => ReportPage(),
           '/search_page': (BuildContext context) => SearchPage(),
           '/qrscan_page': (BuildContext context) => Qrscan(),
+          '/all_bienes_page': (BuildContext context) => AllBienesPage(),
         });
   }
 }

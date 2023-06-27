@@ -18,4 +18,6 @@ class APIconstant {
   static String rutaAsociados = "/tesvb/asociados.php";
   //peticion para resguardos
   static String rutaResguardos = "/tesvb/GET_RESGUARDOS.php";
+  //peticion para cambiar estados
+  static String rutaCambiarEstado = "/tesvb/UPDATE_ESTADO.php";
 }

@@ -89,3 +89,18 @@ class ApiServiciosResguardos {
     return r;
   }
 }
+
+class ApiServiciosEstados {
+  TextEditingController estadoControler = TextEditingController();
+  void updateEstado() async {
+    try {
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
+      var response = await http.post(url, body: {
+        "estado": estadoControler.text,
+      });
+      var data = jsonDecode(response.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+}
