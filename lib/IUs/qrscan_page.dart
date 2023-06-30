@@ -196,90 +196,92 @@ class _QrscanPage extends State<Qrscan> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(title: Text("Qr Scan")),
             body: Builder(builder: (BuildContext context) {
               return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20.0,
+                alignment: Alignment.center,
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      margin: const EdgeInsets.only(
+                        top: 10.0,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 55, 23, 234),
+                            Color.fromARGB(255, 107, 96, 234),
+                          ],
                         ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          margin: const EdgeInsets.only(
-                            top: 10.0,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50.0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF6078ea).withOpacity(.3),
+                            offset: const Offset(0.0, 8.0),
+                            blurRadius: 8.0,
                           ),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color.fromARGB(255, 55, 23, 234),
-                                Color.fromARGB(255, 107, 96, 234),
-                              ],
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF6078ea).withOpacity(.3),
-                                offset: const Offset(0.0, 8.0),
-                                blurRadius: 8.0,
-                              ),
-                            ],
-                          ),
-                          child: InkWell(
-                            onTap: () => scanQR(),
-                            child: const Center(
-                              child: Text(
-                                "Inicio de escaneo de código QR",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                        ],
+                      ),
+                      child: InkWell(
+                        onTap: () => scanQR(),
+                        child: const Center(
+                          child: Text(
+                            "Inicio de escaneo de código QR",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Container(
-                          child: Text('Resultado del escaner:\n$_scanBarcode\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20)),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        TextButton.icon(
-                          icon: Icon(Icons.update),
-                          label:
-                              Text('Click si desea cambiar el estado del bien'),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/setstate_page');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Redireccionando...'),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Container(
-                          child: list(),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Container(
-                          child: searchTF(),
-                        ),
-                      ]));
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                      child: Text('Resultado del escaner:\n$_scanBarcode\n',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    TextButton.icon(
+                      icon: Icon(Icons.update),
+                      label: Text('Click si desea cambiar el estado del bien'),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/setstate_page');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Redireccionando...'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Container(
+                      child: list(),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Container(
+                      child: searchTF(),
+                    ),
+                  ],
+                ),
+              );
             })));
   }
 }
