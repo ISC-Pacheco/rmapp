@@ -17,7 +17,8 @@ class Resguardos {
     List<Resguardo> _resguardos = tempBienes.resguardos!
         .where((b) =>
             (b.nombre.toLowerCase().contains(filterString.toLowerCase())) ||
-            (b.resguardo.toLowerCase().contains(filterString.toLowerCase())))
+            (b.resguardo.toLowerCase().contains(filterString.toLowerCase())) ||
+            (b.Fecha.toLowerCase().contains(filterString.toLowerCase())))
         .toList();
     resguardos.resguardos = _resguardos;
     return resguardos;
