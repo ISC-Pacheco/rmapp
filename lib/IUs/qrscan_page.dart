@@ -64,7 +64,7 @@ class _QrscanPage extends State<Qrscan> {
     nick = _scanBarcode;
     try {
       final response = await http.post(url, body: {
-        "nick": _scanBarcode,
+        "numero": _scanBarcode,
       });
       var data = jsonDecode(response.body);
       if (200 == response.statusCode) {

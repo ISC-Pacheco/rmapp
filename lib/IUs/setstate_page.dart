@@ -131,7 +131,7 @@ class SetStatePage extends State<setstatepage> {
                               Icons.update,
                               color: Colors.black,
                             ),
-                            hintText: 'ingrese 1 para Bien ó 2 para Mal',
+                            hintText: '(1 para Bien / 2 para Mal / 3 Regular)',
                           ),
                         ),
                       ),

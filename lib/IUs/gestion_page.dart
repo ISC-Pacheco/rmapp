@@ -40,7 +40,7 @@ class DataTableBienesState extends State<GestionPage> {
   var nobreBien = "Material: ";
   var resguardador = "Responsable: ";
   var cantidad = "Cantidad: ";
-  var fecha = "Fecha: ";
+  var fecha = "Numero de inventario: ";
 
   // Variable para controlar el estado de la lista de resguardos
   @override
@@ -79,6 +79,16 @@ class DataTableBienesState extends State<GestionPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
+              fecha + resguardos.resguardos![index].Fecha,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
               nobreBien + resguardos.resguardos![index].nombre,
               style: TextStyle(
                 fontSize: 16.0,
@@ -107,6 +117,19 @@ class DataTableBienesState extends State<GestionPage> {
             ),
             SizedBox(
               height: 5.0,
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.check_circle),
+              label: Text('Cambiar estado del bien'),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Redireccionando...'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+                Navigator.of(context).pushNamed('/setstate_page');
+              },
             ),
           ],
         ),

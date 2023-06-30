@@ -215,7 +215,7 @@ class _BienesPageState extends State<BienesPage> {
         filled: true,
         fillColor: Colors.white54,
         contentPadding: EdgeInsets.all(15.0),
-        hintText: 'Filtrar por nombre o nick',
+        hintText: 'Filtrar (nombre / Numero de inventario)',
       ),
       onChanged: (string) {
         tiempodeespera.run(() {
