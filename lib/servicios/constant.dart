@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
+
 /*
 Agregar las rutas de las peticiones que se van a realizar al servidor
  */

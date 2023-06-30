@@ -22,7 +22,7 @@ class Servicios {
         return List.empty(growable: true);
       }
     } catch (e) {
-      return List.empty(); // return an empty list on exception/error
+      return List.empty();
     }
   }
 

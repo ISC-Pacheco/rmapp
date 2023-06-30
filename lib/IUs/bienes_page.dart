@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:flutter/material.dart';
 import 'package:rmapp/models/bienes.dart';
+import 'package:http/http.dart' as http;
+
+import '../servicios/constant.dart';
 
 class BienesPage extends StatefulWidget {
   BienesPage({Key? key}) : super(key: key);
@@ -28,7 +33,8 @@ class TiempoDeEspera {
 
 //referencia al modelo de datos usado para un bien material
 class _BienesPageState extends State<BienesPage> {
-  final tiempodeespera = TiempoDeEspera(milliseconds: 1000);
+  // Variable para controlar el tiempo de espera
+  final tiempodeespera = TiempoDeEspera(milliseconds: 800);
 
   // Lista de bienes
   late Bienes bienes;
@@ -105,16 +111,6 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              descripcion + bienes.bienes![index].caracteristicas,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
               numInventario + bienes.bienes![index].num_inventario,
               style: TextStyle(
                 fontSize: 14.0,
@@ -145,7 +141,17 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              factura + bienes.bienes![index].factura,
+              idModelo + bienes.bienes![index].id_modelo,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              idEstado + bienes.bienes![index].id_estado,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -156,13 +162,16 @@ class _BienesPageState extends State<BienesPage> {
             ),
             TextButton.icon(
               icon: Icon(Icons.check_circle),
-              label: Text('Funciona'),
-              onPressed: () {/* ... */},
-            ),
-            TextButton.icon(
-              icon: Icon(Icons.cancel),
-              label: Text('No funciona'),
-              onPressed: () {/* ... */},
+              label: Text('Cambiar estado del bien'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/setstate_page');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Redireccionando...'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
             ),
             SizedBox(
               height: 5.0,

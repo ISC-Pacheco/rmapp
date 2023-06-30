@@ -49,6 +49,23 @@ class ApiServiciosLogin {
   }
 }
 
+class ApiServiciosEstados {
+  TextEditingController num_inventarioController = TextEditingController();
+  TextEditingController id_estadoController = TextEditingController();
+  Future<List<Resguardo>?> Estado() async {
+    try {
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaLogin);
+      var response = await http.post(url, body: {
+        "num_inventario": num_inventarioController.text,
+        "id_estado": id_estadoController.text
+      });
+      var data = jsonDecode(response.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+}
+
 class ApiServiciosBusqueda {
   TextEditingController searchController = TextEditingController();
   Future<List<Resguardo>?> search() async {
@@ -90,13 +107,30 @@ class ApiServiciosResguardos {
   }
 }
 
-class ApiServiciosEstados {
-  TextEditingController estadoControler = TextEditingController();
+class ApiServiciosQR {
+  TextEditingController qrController = TextEditingController();
+  Future<List<Resguardo>?> qr() async {
+    try {
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
+      var response = await http.post(url, body: {
+        "num_inventario": qrController.text,
+      });
+      var data = jsonDecode(response.body);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+}
+
+class ApiServiciosEstad {
+  TextEditingController id_estadoControler = TextEditingController();
+  TextEditingController num_inventarioControler = TextEditingController();
   void updateEstado() async {
     try {
       var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
       var response = await http.post(url, body: {
-        "estado": estadoControler.text,
+        "id_estado": id_estadoControler.text,
+        "num_inventario": num_inventarioControler.text,
       });
       var data = jsonDecode(response.body);
     } catch (e) {
