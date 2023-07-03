@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:rmapp/IUs/gestion_page.dart';
 import 'package:rmapp/models/resguardos.dart';
 import 'package:rmapp/servicios/api_servicios.dart';
-import 'package:rmapp/servicios/constant.dart';
-import 'package:http/http.dart' as http;
 
 class Qrscan extends StatefulWidget {
   @override
@@ -29,6 +25,7 @@ class TiempoDeEspera {
 }
 
 class _QrscanPage extends State<Qrscan> {
+  TextEditingController qrscanController = TextEditingController();
   String _scanBarcode = '';
 
   Future<void> startBarcodeScanStream() async {
@@ -84,6 +81,7 @@ class _QrscanPage extends State<Qrscan> {
   @override
   void initState() {
     super.initState();
+    qrscanController.text = _scanBarcode;
     title = 'Cargando resguardos...';
     // Obtenemos la lista de resguardos
     resguardos = Resguardos();
@@ -163,7 +161,9 @@ class _QrscanPage extends State<Qrscan> {
 
   Widget searchTF() {
     return TextField(
+      controller: qrscanController,
       decoration: InputDecoration(
+        labelText: _scanBarcode,
         border: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
             const Radius.circular(
@@ -174,7 +174,6 @@ class _QrscanPage extends State<Qrscan> {
         filled: true,
         fillColor: Colors.white54,
         contentPadding: EdgeInsets.all(15.0),
-        hintText: 'Compara tus datos ingresa num de inventario',
       ),
       onChanged: (string) {
         tiempodeespera.run(() {
@@ -255,8 +254,8 @@ class _QrscanPage extends State<Qrscan> {
                       height: 10.0,
                     ),
                     TextButton.icon(
-                      icon: Icon(Icons.update),
-                      label: Text('Click si desea cambiar el estado del bien'),
+                      icon: Icon(Icons.check),
+                      label: Text(''),
                       onPressed: () {
                         Navigator.of(context).pushNamed('/setstate_page');
                         ScaffoldMessenger.of(context).showSnackBar(

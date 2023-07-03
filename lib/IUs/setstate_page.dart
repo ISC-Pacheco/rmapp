@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rmapp/IUs/bienes_page.dart';
 import 'package:rmapp/servicios/constant.dart';
 
 class setstatepage extends StatefulWidget {
@@ -14,7 +15,6 @@ class SetStatePage extends State<setstatepage> {
   //Controladores para los campos de texto
   TextEditingController num_inventarioController = TextEditingController();
   TextEditingController id_estadoController = TextEditingController();
-
   Future setstate(BuildContext cont) async {
     if (num_inventarioController.text == "" || id_estadoController.text == "") {
       ScaffoldMessenger.of(context).showSnackBar(

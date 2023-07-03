@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:flutter/material.dart';
-import 'package:rmapp/models/bienes.dart';
 import 'package:http/http.dart' as http;
-
-import '../servicios/constant.dart';
+import 'package:rmapp/models/bienes.dart';
+import 'package:rmapp/servicios/api_servicios.dart';
+import 'package:rmapp/servicios/constant.dart';
 
 class BienesPage extends StatefulWidget {
   BienesPage({Key? key}) : super(key: key);
@@ -31,15 +29,11 @@ class TiempoDeEspera {
   }
 }
 
-//referencia al modelo de datos usado para un bien material
 class _BienesPageState extends State<BienesPage> {
-  // Variable para controlar el tiempo de espera
+  TextEditingController idInventarioController = TextEditingController();
   final tiempodeespera = TiempoDeEspera(milliseconds: 800);
-
-  // Lista de bienes
   late Bienes bienes;
   late String title;
-  //Etiqutas para la presentacion de los datos
   var nobreBien = "Nombre del bien:";
   var descripcion = "Carcteristicas:";
   var numInventario = "Numero de inventario:";
@@ -62,16 +56,17 @@ class _BienesPageState extends State<BienesPage> {
   var factura = "Factura:";
   var funciona;
   var noFunciona;
+  TextEditingController num_inventarioController = TextEditingController();
+  TextEditingController id_estadoController = TextEditingController();
 
-  // Variable para controlar el estado de la lista de bienes
   @override
   void initState() {
     super.initState();
+    num_inventarioController.text;
+    id_estadoController.text;
     title = 'Cargando bienes...';
-    // Obtenemos la lista de bienes
     bienes = Bienes();
     ApiServiciosBienes.getBienes().then((bienesFromServer) {
-      // Actualizamos la lista de bienes
       setState(() {
         bienes = bienesFromServer;
         title = widget.title;
@@ -82,10 +77,8 @@ class _BienesPageState extends State<BienesPage> {
   Widget list() {
     return Expanded(
       child: ListView.builder(
-        itemCount: bienes.bienes == null ? 0 : bienes.bienes?.length,
+        itemCount: bienes.bienes == null ? 0 : bienes.bienes!.length,
         itemBuilder: (BuildContext context, int index) {
-          trailing:
-          Icon(Icons.arrow_forward);
           return row(index);
         },
       ),
@@ -101,7 +94,7 @@ class _BienesPageState extends State<BienesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              nobreBien + bienes.bienes![index].nombre,
+              nobreBien + bienes.bienes![index].nombre!,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -111,7 +104,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              numInventario + bienes.bienes![index].num_inventario,
+              numInventario + bienes.bienes![index].num_inventario!,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -121,7 +114,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              nick + bienes.bienes![index].nick,
+              nick + bienes.bienes![index].nick!,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -131,7 +124,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              serie + bienes.bienes![index].serie,
+              serie + bienes.bienes![index].serie!,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -141,7 +134,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              idModelo + bienes.bienes![index].id_modelo,
+              idModelo + bienes.bienes![index].id_modelo!,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -151,7 +144,7 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              idEstado + bienes.bienes![index].id_estado,
+              idEstado + bienes.bienes![index].id_estado!,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.black,
@@ -162,15 +155,21 @@ class _BienesPageState extends State<BienesPage> {
             ),
             TextButton.icon(
               icon: Icon(Icons.check_circle),
-              label: Text('Cambiar estado del bien'),
+              label: Text(''),
               onPressed: () {
-                Navigator.of(context).pushNamed('/setstate_page');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Redireccionando...'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
+                cambiarEstadoBien(index);
+                setEstado(context);
+              },
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.cancel),
+              label: Text(''),
+              onPressed: () {
+                cambiarEstadoBien(index);
+                setEstado(context);
               },
             ),
             SizedBox(
@@ -196,6 +195,13 @@ class _BienesPageState extends State<BienesPage> {
         ),
       ),
     );
+  }
+
+  void cambiarEstadoBien(int index) {
+    String nInventario = bienes.bienes![index].num_inventario!;
+    num_inventarioController.text = nInventario;
+    String nEstado = bienes.bienes![index].id_estado!;
+    id_estadoController.text = nEstado;
   }
 
   Widget searchTF() {
@@ -239,7 +245,6 @@ class _BienesPageState extends State<BienesPage> {
       appBar: AppBar(
         title: Text(title),
         backgroundColor: Color.fromARGB(255, 43, 140, 237),
-        //toolbarHeight: 0,
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
@@ -254,5 +259,62 @@ class _BienesPageState extends State<BienesPage> {
         ),
       ),
     );
+  }
+
+  void setEstado(BuildContext context) async {
+    String numInventario = num_inventarioController.text;
+    String idEstado = id_estadoController.text;
+    if (numInventario.isNotEmpty && idEstado.isNotEmpty) {
+      // Aquí puedes realizar la llamada a la función para enviar los datos al servidor o hacer cualquier otra operación necesaria.
+      print("Número de inventario: $numInventario");
+      print("ID de estado: $idEstado");
+      if (idEstado == "BUENO") {
+        id_estadoController.text = "2";
+      } else {
+        id_estadoController.text = "1";
+      }
+      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
+      var response = await http.post(url, body: {
+        "num_inventario": num_inventarioController.text,
+        "id_estado": id_estadoController.text,
+      });
+      var data = json.decode(response.body);
+      if (data == "OK") {
+        Navigator.of(context).pushReplacementNamed('/home_page');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Datos actualizados'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Sin cambios'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      num_inventarioController.clear();
+      id_estadoController.clear();
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Campos vacíos'),
+            content: Text('Por favor, complete todos los campos.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Aceptar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
