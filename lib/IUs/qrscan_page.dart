@@ -101,7 +101,7 @@ class _QrscanPage extends State<Qrscan> {
         });
       });
     });
-    title = 'Cargando resguardos...';
+    title = '...';
     // Obtenemos la lista de resguardos
     resguardos = Resguardos();
     ApiServiciosResguardos.getResguardos().then((bienesFromServer) {
@@ -210,7 +210,9 @@ class _QrscanPage extends State<Qrscan> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(title: Text("Qr Scan")),
+        appBar: AppBar(
+          title: Text("Qr Scan"),
+        ),
         body: Builder(builder: (BuildContext context) {
           return Container(
             alignment: Alignment.center,
@@ -247,7 +249,7 @@ class _QrscanPage extends State<Qrscan> {
                     onTap: () {
                       scanQR();
                       setState(() {
-                        showSearch = true;
+                        showSearch = false;
                       });
                     },
                     child: const Center(

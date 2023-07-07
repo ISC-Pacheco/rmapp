@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rmapp/IUs/bienes_page.dart';
-import 'package:rmapp/IUs/gestion_page.dart';
+import 'package:rmapp/IUs/qrscan_page.dart';
 import 'package:rmapp/IUs/report_page.dart';
 
 class HomePages extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePages> {
   late final Color? shadowColor;
   List<Widget> _paginas = [
     BienesPage(),
-    GestionPage(),
+    Qrscan(),
     ReportPage(),
   ];
 
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePages> {
                   child: Image.asset('assets/images/splashs.png'),
                 ),
                 const Text(
-                  'TESVB',
+                  '',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 Container(
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePages> {
                       },
                       child: const Center(
                         child: Text(
-                          'Inicio',
+                          'Listado de bienes por resguardatario',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,
@@ -106,11 +106,11 @@ class _HomePageState extends State<HomePages> {
                     child: InkWell(
                       onTap: () {
                         //llamamos a page_gestion
-                        Navigator.of(context).pushNamed('/gestion_page');
+                        Navigator.of(context).pushNamed('/qrscan_page');
                       },
                       child: const Center(
                         child: Text(
-                          'Gesionar',
+                          'Escanea',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePages> {
                       },
                       child: const Center(
                         child: Text(
-                          'Reportes',
+                          'Reporte de bienes',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,
@@ -189,14 +189,6 @@ class _HomePageState extends State<HomePages> {
         ),
         appBar: AppBar(
           title: Text('Bienes materiales'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.qr_code_scanner),
-              onPressed: () {
-                Navigator.pushNamed(context, '/qrscan_page');
-              },
-            ),
-          ],
         ),
         body: Center(
           child: _paginas[_paginaActual],
@@ -212,11 +204,11 @@ class _HomePageState extends State<HomePages> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Inicio',
+              label: 'Lista',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
-              label: 'Gestion',
+              label: 'Escanea',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.task),

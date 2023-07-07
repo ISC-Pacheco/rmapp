@@ -9,7 +9,7 @@ import 'package:rmapp/servicios/constant.dart';
 class BienesPage extends StatefulWidget {
   BienesPage({Key? key}) : super(key: key);
 
-  final String title = "Preview de bienes";
+  final String title = "Listado de bienes por resguardatario";
 
   @override
   _BienesPageState createState() => _BienesPageState();
@@ -204,38 +204,51 @@ class _BienesPageState extends State<BienesPage> {
     id_estadoController.text = nEstado;
   }
 
+  //the next widget have a bootom union to text field
   Widget searchTF() {
-    return TextField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(
-            const Radius.circular(
-              5.0,
+    return Row(
+      children: <Widget>[
+        TextButton.icon(
+          icon: Icon(Icons.qr_code),
+          label: Text(''),
+          onPressed: () {
+            Navigator.pushNamed(context, '/qrscan_page');
+          },
+        ),
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(
+                    5.0,
+                  ),
+                ),
+              ),
+              filled: true,
+              fillColor: Colors.white54,
+              contentPadding: EdgeInsets.all(15.0),
+              hintText: 'Buscador',
             ),
+            onChanged: (string) {
+              tiempodeespera.run(() {
+                setState(() {
+                  title = 'Buscando...';
+                });
+                ApiServiciosBienes.getBienes().then((bienesFromServer) {
+                  setState(() {
+                    bienes = Bienes.filterList(bienesFromServer, string);
+                    title = widget.title;
+                  });
+                });
+              });
+            },
           ),
         ),
-        icon: Icon(
-          Icons.search,
-          color: Colors.black,
+        SizedBox(
+          width: 5.0,
         ),
-        filled: true,
-        fillColor: Colors.white54,
-        contentPadding: EdgeInsets.all(15.0),
-        hintText: 'Filtrar (nombre / Numero de inventario)',
-      ),
-      onChanged: (string) {
-        tiempodeespera.run(() {
-          setState(() {
-            title = 'Buscando...';
-          });
-          ApiServiciosBienes.getBienes().then((bienesFromServer) {
-            setState(() {
-              bienes = Bienes.filterList(bienesFromServer, string);
-              title = widget.title;
-            });
-          });
-        });
-      },
+      ],
     );
   }
 

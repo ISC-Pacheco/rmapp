@@ -210,8 +210,6 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            /*Navigator.of(context)
-                                .pushReplacementNamed('/home_page');*/
                             login(context); /*llamamos a la home page*/
                           },
                           child: const Center(
