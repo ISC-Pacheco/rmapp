@@ -34,26 +34,12 @@ class _BienesPageState extends State<BienesPage> {
   final tiempodeespera = TiempoDeEspera(milliseconds: 800);
   late Bienes bienes;
   late String title;
-  var nobreBien = "Nombre del bien:";
-  var descripcion = "Carcteristicas:";
-  var numInventario = "Numero de inventario:";
-  var nick = "Nick:";
-  var serie = "Serie:";
-  var costo = "Costo:";
-  var stock = "Stock:";
-  var idColor = "Color:";
-  var idTipoB = "Tipo de bien:";
-  var idTipoAdqui = "Tipo de adquisicion:";
-  var fechaAdqui = "Fecha de adquisicion:";
-  var condicion = "Condicion:";
-  var idCategoria = "Categoria:";
-  var idProvedor = "Provedor:";
-  var idModelo = "Modelo:";
-  var idEstado = "Estado:";
-  var idMarca = "Marca:";
-  var fechaCreacion = "Fecha de creacion:";
-  var fechaActualizacion = "Fecha de actualizacion:";
-  var factura = "Factura:";
+  var nBien = "Nombre del bien:";
+  var nInventario = "Numero de inventario:";
+  var nArea = "Area:";
+  var nResguardatario = "Resguardatario:";
+  var nValor = "Valor:";
+
   var funciona;
   var noFunciona;
   TextEditingController num_inventarioController = TextEditingController();
@@ -94,7 +80,7 @@ class _BienesPageState extends State<BienesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              nobreBien + bienes.bienes![index].nombre!,
+              nBien + bienes.bienes![index].descripcion_bien!,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -104,9 +90,9 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              numInventario + bienes.bienes![index].num_inventario!,
+              nInventario + bienes.bienes![index].inventario!,
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 16.0,
                 color: Colors.black,
               ),
             ),
@@ -114,9 +100,9 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              nick + bienes.bienes![index].nick!,
+              nArea + bienes.bienes![index].areas!,
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 16.0,
                 color: Colors.black,
               ),
             ),
@@ -124,9 +110,9 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              serie + bienes.bienes![index].serie!,
+              nResguardatario + bienes.bienes![index].resguardatorio!,
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 16.0,
                 color: Colors.black,
               ),
             ),
@@ -134,62 +120,17 @@ class _BienesPageState extends State<BienesPage> {
               height: 5.0,
             ),
             Text(
-              idModelo + bienes.bienes![index].id_modelo!,
+              nValor + bienes.bienes![index].valor!,
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: 16.0,
                 color: Colors.black,
               ),
             ),
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              idEstado + bienes.bienes![index].id_estado!,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black,
-              ),
-            ),
             SizedBox(
               height: 5.0,
-            ),
-            TextButton.icon(
-              icon: Icon(Icons.check_circle),
-              label: Text(''),
-              onPressed: () {
-                cambiarEstadoBien(index);
-                setEstado(context);
-              },
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            TextButton.icon(
-              icon: Icon(Icons.cancel),
-              label: Text(''),
-              onPressed: () {
-                cambiarEstadoBien(index);
-                setEstado(context);
-              },
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: Text(
-                    "Ver mas",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/all_bienes_page');
-                  },
-                ),
-              ],
             ),
           ],
         ),
@@ -198,10 +139,10 @@ class _BienesPageState extends State<BienesPage> {
   }
 
   void cambiarEstadoBien(int index) {
-    String nInventario = bienes.bienes![index].num_inventario!;
+    String nInventario = bienes.bienes![index].inventario!;
     num_inventarioController.text = nInventario;
-    String nEstado = bienes.bienes![index].id_estado!;
-    id_estadoController.text = nEstado;
+    //String nEstado = bienes.bienes![index].id_estado!;
+    //id_estadoController.text = nEstado;
   }
 
   //the next widget have a bootom union to text field
@@ -286,7 +227,8 @@ class _BienesPageState extends State<BienesPage> {
       } else {
         id_estadoController.text = "1";
       }
-      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
+      var url =
+          Uri.parse(APIconstant.base_URL + APIconstant.rutaUpdateAnotation);
       var response = await http.post(url, body: {
         "num_inventario": num_inventarioController.text,
         "id_estado": id_estadoController.text,

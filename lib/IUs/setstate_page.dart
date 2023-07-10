@@ -25,7 +25,8 @@ class SetStatePage extends State<setstatepage> {
       );
       return;
     } else {
-      var url = Uri.parse(APIconstant.base_URL + APIconstant.rutaCambiarEstado);
+      var url =
+          Uri.parse(APIconstant.base_URL + APIconstant.rutaUpdateAnotation);
       var response = await http.post(url, body: {
         "num_inventario": num_inventarioController.text,
         "id_estado": id_estadoController.text,

@@ -25,7 +25,7 @@ class APIconstantServer {
 //para pruebas locales
 class APIconstant {
   //IP del pc
-  static String base_URL = "192.168.1.103";
+  static String base_URL = "http://192.168.1.103";
   //peticion login
   static String rutaLogin = "/bienes/login.php";
   //peticion get bienes materiales
@@ -41,5 +41,5 @@ class APIconstant {
   //peticion para resguardos
   static String rutaResguardos = "/bienes/GET_RESGUARDOS.php";
   //peticion para cambiar estados
-  static String rutaCambiarEstado = "/bienes/UPDATE_ESTADO.php";
+  static String rutaUpdateAnotation = "/bienes/UPDATE_ANOTATION.php";
 }

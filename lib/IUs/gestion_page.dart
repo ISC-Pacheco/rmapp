@@ -159,7 +159,7 @@ class DataTableBienesState extends State<GestionPage> {
           });
           ApiServiciosResguardos.getResguardos().then((resguardosFromServer) {
             setState(() {
-              resguardos = Resguardos.filterList(resguardosFromServer, string);
+              // bienes = Bienes.filterList(resguardosFromServer, string);
               title = widget.title;
             });
           });

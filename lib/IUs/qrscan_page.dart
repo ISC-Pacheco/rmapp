@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:rmapp/models/resguardos.dart';
+import 'package:rmapp/models/bienes.dart';
 import 'package:rmapp/servicios/api_servicios.dart';
+import 'package:http/http.dart' as http;
+
+import '../servicios/constant.dart';
 
 class Qrscan extends StatefulWidget {
   @override
@@ -25,14 +29,20 @@ class TiempoDeEspera {
 }
 
 class _QrscanPage extends State<Qrscan> {
+  bool showTextField =
+      false; // Variable para controlar la visibilidad del TextField
+  TextEditingController num_inventarioController = TextEditingController();
   TextEditingController qrscanController = TextEditingController();
+  String noteText = ''; // Texto inicial del hintText
+  TextEditingController noteEditingController = TextEditingController();
   String _scanBarcode = '';
   bool showSearch = false;
-  bool isListVisible = false; // Nueva variable
+  bool isListVisible = false;
+  List<String> numerosInventario = [];
 
   Future<void> startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
-            '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
+            '#ff6666', 'Cancelar', true, ScanMode.BARCODE)!
         .listen((barcode) => print(barcode));
   }
 
@@ -40,7 +50,7 @@ class _QrscanPage extends State<Qrscan> {
     String barcodeScanRes;
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+          '#ff6666', 'Cancelar', true, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Falla al obtener la versión de la plataforma.';
@@ -57,7 +67,7 @@ class _QrscanPage extends State<Qrscan> {
     String barcodeScanRes;
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+          '#ff6666', 'Cancelar', true, ScanMode.BARCODE);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Falla en la versión de plataforma.';
@@ -69,18 +79,61 @@ class _QrscanPage extends State<Qrscan> {
     });
   }
 
+  Future updateAnotation() async {
+    if (noteEditingController.text == "" ||
+        num_inventarioController.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Se requiere informacion'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    } else {
+      try {
+        var url =
+            Uri.parse(APIconstant.base_URL + APIconstant.rutaUpdateAnotation);
+        var response = await http.post(url, body: {
+          "inventario": num_inventarioController.text,
+          "anotacion": noteEditingController.text
+        });
+        var data = jsonDecode(response.body);
+        if (data == "OK") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Nota guardada'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al guardar nota'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
   final tiempodeespera = TiempoDeEspera(milliseconds: 1000);
 
-  // Lista de resguardos
-  late Resguardos resguardos;
+  // Lista de bienes
+  late Bienes bienes;
   late String title;
   //flags
-  var nobreBien = "Material: ";
-  var resguardador = "Responsable: ";
-  var cantidad = "Cantidad: ";
-  var fecha = "Número de inventario: ";
+  var nBien = "Nombre del bien:";
+  var nInventario = "Numero de inventario:";
+  var nArea = "Area:";
+  var nResguardatario = "Resguardatario:";
+  var nValor = "Valor:";
+  var note = "";
+  var bycontrol = "";
 
-  // Variable para controlar el estado de la lista de resguardos
+  // Variable para controlar el estado de la lista de bienes
   @override
   void initState() {
     super.initState();
@@ -89,25 +142,24 @@ class _QrscanPage extends State<Qrscan> {
       String searchString = qrscanController.text;
       tiempodeespera.run(() {
         setState(() {
-          title = 'Buscando...';
+          title = '';
         });
-        ApiServiciosResguardos.getResguardos().then((resguardosFromServer) {
+        ApiServiciosBienes.getBienes().then((bienesFromServer) {
           setState(() {
-            resguardos =
-                Resguardos.filterList(resguardosFromServer, searchString);
-            isListVisible = resguardos.resguardos != null &&
-                resguardos.resguardos!.isNotEmpty; // Establece isListVisible
+            bienes = Bienes.filterList(bienesFromServer, searchString);
+            isListVisible = bienes.bienes != null &&
+                bienes.bienes!.isNotEmpty; // Establece isListVisible
           });
         });
       });
     });
-    title = '...';
-    // Obtenemos la lista de resguardos
-    resguardos = Resguardos();
-    ApiServiciosResguardos.getResguardos().then((bienesFromServer) {
-      // Actualizamos la lista de resguardos
+    title = '';
+    // Obtenemos la lista de bienes
+    bienes = Bienes();
+    ApiServiciosBienes.getBienes().then((bienesFromServer) {
+      // Actualizamos la lista de bienes
       setState(() {
-        resguardos = bienesFromServer;
+        bienes = bienesFromServer;
       });
     });
   }
@@ -119,8 +171,7 @@ class _QrscanPage extends State<Qrscan> {
 
     return Expanded(
       child: ListView.builder(
-        itemCount:
-            resguardos.resguardos == null ? 0 : resguardos.resguardos!.length,
+        itemCount: bienes.bienes == null ? 0 : bienes.bienes!.length,
         itemBuilder: (BuildContext context, int index) {
           return row(index);
         },
@@ -137,7 +188,7 @@ class _QrscanPage extends State<Qrscan> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              fecha + resguardos.resguardos![index].Fecha,
+              nInventario + bienes.bienes![index].inventario,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -147,7 +198,7 @@ class _QrscanPage extends State<Qrscan> {
               height: 5.0,
             ),
             Text(
-              nobreBien + resguardos.resguardos![index].nombre,
+              nBien + bienes.bienes![index].descripcion_bien,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -157,7 +208,7 @@ class _QrscanPage extends State<Qrscan> {
               height: 5.0,
             ),
             Text(
-              cantidad + resguardos.resguardos![index].Cantidad,
+              nResguardatario + bienes.bienes![index].resguardatorio,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -167,11 +218,62 @@ class _QrscanPage extends State<Qrscan> {
               height: 5.0,
             ),
             Text(
-              resguardador + resguardos.resguardos![index].resguardo,
+              nArea + bienes.bienes![index].areas,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
               ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                TextButton.icon(
+                  onPressed: () {
+                    //descripcion del lugar donde se encontro no requerida
+                    setState(() {
+                      numerosInventario.add(bienes.bienes![index].inventario);
+                      print(numerosInventario);
+                    });
+                  },
+                  icon: Icon(
+                    Icons.check,
+                    color: Colors.blue,
+                  ),
+                  label: Text(
+                    'Area correcta',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    //descripcion del lugar donde se encontro requerida
+                    setState(() {
+                      showTextField = true;
+                      //noteText = '¿Donde lo encontraste?';
+                      numerosInventario.add(bienes.bienes![index].inventario);
+                      bycontrol = bienes.bienes![index].inventario;
+                      num_inventarioController.text = bycontrol;
+                      noteEditingController.text = noteText; //para la funcion
+                      print("$numerosInventario \n $note");
+                    });
+                  },
+                  icon: Icon(
+                    Icons.cancel,
+                    color: Colors.orange,
+                  ),
+                  label: Text(
+                    'Area incorrecta',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 5.0,
@@ -180,6 +282,11 @@ class _QrscanPage extends State<Qrscan> {
         ),
       ),
     );
+  }
+
+  void cambiarEstadoBien(int index) {
+    String getnInventario = bienes.bienes![index].inventario!;
+    num_inventarioController.text = nInventario;
   }
 
   Widget searchTF() {
@@ -202,6 +309,64 @@ class _QrscanPage extends State<Qrscan> {
         contentPadding: EdgeInsets.all(15.0),
       ),
     );
+  }
+
+  Widget noteTF() {
+    if (!showTextField) {
+      return SizedBox.shrink();
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: TextField(
+            controller: noteEditingController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(
+                    5.0,
+                  ),
+                ),
+              ),
+              filled: true,
+              fillColor: Colors.white54,
+              contentPadding: EdgeInsets.all(15.0),
+              hintText: "¿Donde lo encontraste?",
+            ),
+            maxLines: null,
+          ),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Container(
+          child: TextButton.icon(
+            onPressed: () {
+              bycontrol = num_inventarioController.text;
+              print(bycontrol);
+              note = noteEditingController.text;
+              updateAnotation();
+              print(note);
+              setState(() {
+                showTextField = false;
+              });
+            },
+            icon: Icon(
+              Icons.save,
+              color: Colors.blue,
+            ),
+            label: Text(
+              'Guardar',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+    //save buttom
   }
 
   @override
@@ -278,6 +443,10 @@ class _QrscanPage extends State<Qrscan> {
                     color: Colors.black,
                   ),
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                noteTF(),
                 SizedBox(
                   height: 10.0,
                 ),
