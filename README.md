@@ -3,5 +3,5 @@
 
 ### La aplicacion esta ***desarrollada con flutter empleando el lenguaje de programacion dart*** la cual se comunica con un servidor empleando una API.
 
-En desarrollo...
+En desarrollo... por pacheco en colaboracion con angel
 
