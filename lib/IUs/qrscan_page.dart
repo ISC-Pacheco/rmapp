@@ -355,6 +355,7 @@ class _QrscanPage extends State<Qrscan> {
       checknote = "Sin observaciones";
     }
     return Card(
+      color: Color.fromRGBO(234, 228, 228, 0.953),
       child: Padding(
         padding: EdgeInsets.all(10.0),
         child: Column(
@@ -560,8 +561,8 @@ class _QrscanPage extends State<Qrscan> {
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 55, 23, 234),
-                        Color.fromARGB(255, 107, 96, 234),
+                        Color.fromARGB(255, 45, 149, 241),
+                        Color.fromARGB(255, 45, 149, 241),
                       ],
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(50.0)),

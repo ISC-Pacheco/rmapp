@@ -199,6 +199,7 @@ class _BienesPageState extends State<BienesPage> {
       checknote = "Sin observaciones";
     }
     return Card(
+      color: Color.fromRGBO(234, 228, 228, 0.953),
       child: Padding(
         padding: EdgeInsets.all(10.0),
         child: Column(

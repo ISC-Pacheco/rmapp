@@ -11,7 +11,7 @@ class HomePages extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePages> {
-  int _paginaActual = 0;
+  int _paginaActual = 1; //pagina que queremos ver al inicio
   late final Color? shadowColor;
   List<Widget> _paginas = [
     BienesPage(),
@@ -201,18 +201,22 @@ class _HomePageState extends State<HomePages> {
             });
           },
           currentIndex: _paginaActual,
-          items: [
+          items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Lista',
+              icon: Icon(
+                Icons.home,
+                color: Color.fromRGBO(14, 14, 15, 1),
+              ),
+              label: 'Resguardos',
+              backgroundColor: Color.fromRGBO(14, 14, 15, 1),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'Escanea',
+              icon: Icon(Icons.qr_code_2, color: Color.fromRGBO(14, 14, 15, 1)),
+              label: 'Qr Scan',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.task),
-              label: 'Reporte',
+              icon: Icon(Icons.task, color: Color.fromRGBO(14, 14, 15, 1)),
+              label: 'Reportes',
             ),
           ],
           selectedItemColor: Color.fromARGB(255, 45, 149, 241),
