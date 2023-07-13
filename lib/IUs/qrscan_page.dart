@@ -186,6 +186,10 @@ class _QrscanPage extends State<Qrscan> {
   }
 
   Widget row(int index) {
+    var checknote = bienes.bienes![index].anotacion;
+    if (bienes.bienes![index].anotacion == "") {
+      checknote = "Sin observaciones";
+    }
     return Card(
       child: Padding(
         padding: EdgeInsets.all(10.0),
