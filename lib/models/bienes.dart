@@ -10,7 +10,6 @@ class Bienes {
 
   factory Bienes.fromJson(Map<String, dynamic> json) => _$BienesFromJson(json);
   Map<String, dynamic> toJson() => _$BienesToJson(this);
-
   //filter list
 
   static Bienes filterList(Bienes bienes, String filterString) {
@@ -21,6 +20,7 @@ class Bienes {
             (b.resguardatorio
                 .toLowerCase()
                 .contains(filterString.toLowerCase())) ||
+            (b.ubicacion.toLowerCase().contains(filterString.toLowerCase())) ||
             (b.inventario.toLowerCase().contains(filterString.toLowerCase())))
         .toList();
     bienes.bienes = _bienes;

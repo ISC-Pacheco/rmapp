@@ -7,13 +7,14 @@ class Bien {
   Bien();
 
   late String id;
+  late String inventario;
   late String descripcion_bien;
+  late String caracteristicas;
   late String resguardatorio;
   late String nick;
-  late String inventario;
   late String areas;
+  late String ubicacion;
   late String valor;
-  late String caracteristicas;
   late String anotacion;
   
   factory Bien.fromJson(Map<String,dynamic> json) => _$BienFromJson(json);

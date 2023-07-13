@@ -1,11 +1,12 @@
 {
     "id": "1",
-    "descripcion_bien": "MICROCOMPONENTE",
-    "resguardatorio": "ANA SILVIA DIAZ MONROY   ",
-    "nick": "513159",
-    "inventario": "TESVB00632",
-    "areas": "CENTRO DE COMPUTO",
-    "valor": "3575",
-    "caracteristicas": "POTENCIA MAXIMA 2800W CON ECUALIZADOR DE 3 BANDAS, EFECTRO DE SONIDO GROOVE, SURROUND, REPRODUCCI?N DE DICOS CD-R, CD-RW",
+    "inventario": "TESVB06232",
+    "descripcion_bien": "Silla Operativa",
+    "caracteristicas": "Silla de trabajo para computo con elevacion neumatica. \nBase estrella de 5 puntas elaborada en nylon reforzado y con cinturon de acero",
+    "resguardatorio": "Ana Silvia Diaz Monroy   ",
+    "nick": "1608610",
+    "areas": "Centro de Computo",
+    "ubicacion": "Sala de Capacitacion",
+    "valor": "6220.92",
     "anotacion": ""
 }

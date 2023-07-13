@@ -33,6 +33,7 @@ class _QrscanPage extends State<Qrscan> {
       false; // Variable para controlar la visibilidad del TextField
   TextEditingController num_inventarioController = TextEditingController();
   TextEditingController qrscanController = TextEditingController();
+  TextEditingController datosController = TextEditingController();
   String noteText = ''; // Texto inicial del hintText
   TextEditingController noteEditingController = TextEditingController();
   String _scanBarcode = '';
@@ -76,6 +77,7 @@ class _QrscanPage extends State<Qrscan> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
+      numerosInventario;
     });
   }
 
@@ -125,13 +127,17 @@ class _QrscanPage extends State<Qrscan> {
   late Bienes bienes;
   late String title;
   //flags
-  var nBien = "Nombre del bien:";
-  var nInventario = "Numero de inventario:";
-  var nArea = "Area:";
-  var nResguardatario = "Resguardatario:";
-  var nValor = "Valor:";
   var note = "";
   var bycontrol = "";
+  var nBien = "Nombre del bien: ";
+  var nInventario = "Numero de inventario: ";
+  var nArea = "Area: ";
+  var nResguardatario = "Resguardatario: ";
+  var nValor = "Valor: ";
+  var nUbicacion = "Ubicacion: ";
+  var getnumeroinvenrario = "";
+  var dCaracteristicas = "Caracteristicas: ";
+  var dAnotacion = "Notas: ";
 
   // Variable para controlar el estado de la lista de bienes
   @override
@@ -227,6 +233,65 @@ class _QrscanPage extends State<Qrscan> {
             SizedBox(
               height: 5.0,
             ),
+            Text(
+              nUbicacion + bienes.bienes![index].ubicacion,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              dAnotacion + bienes.bienes![index].anotacion,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton.icon(
+                  icon: Icon(Icons.library_add),
+                  label: Text(
+                    "Ver más",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Detalles del bien'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                fullrow(index),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Aceptar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    getnumeroinvenrario = bienes.bienes![index].inventario;
+                    print(getnumeroinvenrario);
+                  },
+                ),
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -274,6 +339,104 @@ class _QrscanPage extends State<Qrscan> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget fullrow(int index) {
+    var checknote = bienes.bienes![index].anotacion;
+    if (bienes.bienes![index].anotacion == "") {
+      checknote = "Sin observaciones";
+    }
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              nInventario + bienes.bienes![index].inventario!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nBien + bienes.bienes![index].descripcion_bien!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              dCaracteristicas + bienes.bienes![index].caracteristicas!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nArea + bienes.bienes![index].areas!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nUbicacion + bienes.bienes![index].ubicacion!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nResguardatario + bienes.bienes![index].resguardatorio!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nValor + bienes.bienes![index].valor!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              dAnotacion + checknote!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
             ),
             SizedBox(
               height: 5.0,
@@ -451,6 +614,9 @@ class _QrscanPage extends State<Qrscan> {
                   height: 10.0,
                 ),
                 list(),
+                SizedBox(
+                  height: 10.0,
+                ),
               ],
             ),
           );

@@ -2,15 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rmapp/IUs/all_bienes_page.dart';
 import 'package:rmapp/IUs/gestion_page.dart';
-import 'package:rmapp/IUs/setstate_page.dart';
 import 'package:rmapp/servicios/constant.dart';
 import 'IUs/bienes_page.dart';
 import 'IUs/home_page.dart';
 import 'IUs/qrscan_page.dart';
 import 'IUs/report_page.dart';
-import 'IUs/search_page.dart';
 
 void main() async => runApp(RmApp());
 
@@ -30,10 +27,7 @@ class RmApp extends StatelessWidget {
           '/bienes_page': (BuildContext context) => BienesPage(),
           '/gestion_page': (BuildContext context) => GestionPage(),
           '/report_page': (BuildContext context) => ReportPage(),
-          '/search_page': (BuildContext context) => SearchPage(),
           '/qrscan_page': (BuildContext context) => Qrscan(),
-          '/all_bienes_page': (BuildContext context) => AllBienesPage(),
-          '/setstate_page': (BuildContext context) => setstatepage(),
         });
   }
 }

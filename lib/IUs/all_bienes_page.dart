@@ -3,9 +3,6 @@ import 'package:rmapp/servicios/api_servicios.dart';
 import 'package:flutter/material.dart';
 import 'package:rmapp/models/bienes.dart';
 
-import 'package:flutter/material.dart';
-import 'dart:async';
-
 class AllBienesPage extends StatefulWidget {
   AllBienesPage({Key? key}) : super(key: key);
 
@@ -31,37 +28,25 @@ class TiempoDeEspera {
 
 class _BienesPageState extends State<AllBienesPage> {
   final tiempodeespera = TiempoDeEspera(milliseconds: 1000);
+  var instancia1 = _BienesPageState();
 
   late Bienes bienes;
   late String title;
 
-  var nobreBien = "Nombre del bien:";
-  var descripcion = "Características:";
-  var numInventario = "Número de inventario:";
-  var nick = "Nick:";
-  var serie = "Serie:";
-  var costo = "Costo:";
-  var stock = "Stock:";
-  var idColor = "Color:";
-  var idTipoB = "Tipo de bien:";
-  var idTipoAdqui = "Tipo de adquisición:";
-  var fechaAdqui = "Fecha de adquisición:";
-  var condicion = "Condición:";
-  var idCategoria = "Categoría:";
-  var idProvedor = "Proveedor:";
-  var idModelo = "Modelo:";
-  var idEstado = "Estado:";
-  var idMarca = "Marca:";
-  var fechaCreacion = "Fecha de creación:";
-  var fechaActualizacion = "Fecha de actualización:";
-  var factura = "Factura:";
-  var funciona;
-  var noFunciona;
+  var nBien = "Nombre del bien: ";
+  var nInventario = "Numero de inventario: ";
+  var nArea = "Area:";
+  var nResguardatario = "Resguardatario: ";
+  var nValor = "Valor: ";
+  var nUbicacion = "Ubicacion: ";
+  var dCaracteristicas = "Caracteristicas: ";
+  var dAnotacion = "Notas: ";
+  var abien = "";
 
   @override
   void initState() {
     super.initState();
-    title = 'Cargando bienes...';
+    title = "...";
     bienes = Bienes();
     ApiServiciosBienes.getBienes().then((bienesFromServer) {
       setState(() {
@@ -78,13 +63,17 @@ class _BienesPageState extends State<AllBienesPage> {
         itemBuilder: (BuildContext context, int index) {
           trailing:
           Icon(Icons.arrow_forward);
-          return row(index);
+          return fullrow(index);
         },
       ),
     );
   }
 
-  Widget row(int index) {
+  Widget fullrow(int index) {
+    var checknote = bienes.bienes![index].anotacion;
+    if (bienes.bienes![index].anotacion == "") {
+      checknote = "Sin observaciones";
+    }
     return Card(
       child: Padding(
         padding: EdgeInsets.all(10.0),
@@ -92,8 +81,86 @@ class _BienesPageState extends State<AllBienesPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 5.0),
-            SizedBox(height: 5.0),
+            Text(
+              nInventario + bienes.bienes![index].inventario!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nBien + bienes.bienes![index].descripcion_bien!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              dCaracteristicas + bienes.bienes![index].caracteristicas!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nArea + bienes.bienes![index].areas!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nUbicacion + bienes.bienes![index].ubicacion!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nResguardatario + bienes.bienes![index].resguardatorio!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              nValor + bienes.bienes![index].valor!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              dAnotacion + checknote!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
           ],
         ),
       ),
@@ -144,7 +211,7 @@ class _BienesPageState extends State<AllBienesPage> {
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            searchTF(),
+            //searchTF(),
             SizedBox(height: 10.0),
             list(),
           ],
