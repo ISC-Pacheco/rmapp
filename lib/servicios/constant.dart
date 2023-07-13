@@ -1,7 +1,7 @@
 /*
 Agregar las rutas de las peticiones que se van a realizar al servidor
  */
-class APIconstantServer {
+class APIconstant {
   //IP o url del servidor
   static String base_URL = "https://bewwednethost.000webhostapp.com";
   //peticion login
@@ -21,7 +21,7 @@ class APIconstantServer {
 }
 
 //para pruebas locales
-class APIconstant {
+class APIconstantLocal {
   //IP del pc
   static String base_URL = "http://192.168.1.168";
   //peticion login
